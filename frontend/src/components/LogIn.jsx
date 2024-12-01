@@ -43,7 +43,7 @@ const LogIn = ({ onLogInSuccess }) => {
                     className="login-input"
                 />
                 <button type="submit" className="login-button">Log In</button>
-                <a href="/signin" className="login-link">Don't have an account? Sign In</a>
+                <a href="/signup" className="login-link">Don't have an account? Sign In</a>
             </form>
         </div>
     );
