@@ -27,10 +27,10 @@ const LogIn = ({ onLogInSuccess }) => {
                 <h2 className="login-title">Log In</h2>
                 {error && <p className="login-error">{error}</p>}
                 <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={formData.username}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.emaill}
                     onChange={handleChange}
                     className="login-input"
                 />
@@ -43,7 +43,7 @@ const LogIn = ({ onLogInSuccess }) => {
                     className="login-input"
                 />
                 <button type="submit" className="login-button">Log In</button>
-                <a href="/signin" className="login-link">Don't have an account? Sign In</a>
+                <a href="/signup" className="login-link">Don't have an account? Sign In</a>
             </form>
         </div>
     );
