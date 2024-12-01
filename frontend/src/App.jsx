@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import ChatScreen from "./components/ChatScreen";
@@ -10,16 +10,17 @@ const App = () => {
     //     return !!localStorage.getItem("token"); // Check if the user is logged in
 
     return (
-            <Routes>
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/login" element={<LogIn /> } />
-                {/* <Route path="/chat" element={
-                        <ProtectedRoute isAuthenticated={isAuthenticated}>
-                            <ChatScreen />
-                        </ProtectedRoute> } />
-                <Route path="/public-chat" element={<ChatScreen />} /> */}
-                <Route path="*" element={<Navigate to="/signup" />} />
-            </Routes>
+        <SignUp></SignUp>
+            // <Routes>
+            //     <Route path="/signup" element={<SignUp />} />
+            //     <Route path="/login" element={<LogIn /> } />
+            //     {/* <Route path="/chat" element={
+            //             <ProtectedRoute isAuthenticated={isAuthenticated}>
+            //                 <ChatScreen />
+            //             </ProtectedRoute> } />
+            //     <Route path="/public-chat" element={<ChatScreen />} /> */}
+            //     <Route path="*" element={<Navigate to="/signup" />} />
+            // </Routes>
     );
 };
 
