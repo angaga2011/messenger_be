@@ -14,7 +14,7 @@ const SignUp = ({ onSignUpSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/register`, formData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, formData);
             onSignUpSuccess(); // Navigate to LogIn on success
         } catch (err) {
             setError(err.response?.data?.message || "Sign Up failed");
