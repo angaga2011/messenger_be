@@ -1,13 +1,12 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "../css/SignUp.css";
 
-
-const SignUp = ({ onSignUpSuccess }) => {
+const SignUp = () => {
     const [formData, setFormData] = useState({ username: "", email: "", password: "" });
     const [error, setError] = useState("");
+    const navigate = useNavigate(); // To navigate after signup
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,12 +18,12 @@ const SignUp = ({ onSignUpSuccess }) => {
             // Make the POST request to the backend
             await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
                 username: formData.username,
-                email: formData.email, // Include email in the request
+                email: formData.email,
                 password: formData.password,
             });
 
-            // Call the success callback if registration succeeds
-            onSignUpSuccess();
+            // Navigate to login page on success
+            navigate("/login");
         } catch (err) {
             // Set error message if registration fails
             setError(err.response?.data?.message || "Sign Up failed");
@@ -60,10 +59,8 @@ const SignUp = ({ onSignUpSuccess }) => {
                     onChange={handleChange}
                     className="signup-input"
                 />
-                <Link to="/login">
-                    <button type="submit" className="signup-button">Sign Up</button>
-                </Link>
-                <a href="/login" className="signup-link">Already have an account? Log In</a>
+                <button type="submit" className="signup-button">Sign Up</button>
+                <Link to="/login" className="signup-link">Already have an account? Log In</Link>
             </form>
         </div>
     );
