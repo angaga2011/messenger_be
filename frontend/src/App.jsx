@@ -17,8 +17,8 @@ const App = () => {
                         <ProtectedRoute isAuthenticated={isAuthenticated}>
                             <ChatScreen />
                         </ProtectedRoute> } />
-                <Route path="/public-chat" element={<ChatScreen />} />
-                <Route path="*" element={<Navigate to="/signup" />} /> */}
+                <Route path="/public-chat" element={<ChatScreen />} /> */}
+                <Route path="*" element={<Navigate to="/signup" />} />
             </Routes>
     );
 };
