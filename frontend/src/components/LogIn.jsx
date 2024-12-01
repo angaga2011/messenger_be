@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/LogIn.css";
 
-const LogIn = ({ onLogInSuccess }) => {
-    const [formData, setFormData] = useState({ username: "", password: "" });
+const LogIn = () => {
+    const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
+    const navigate = useNavigate(); // To navigate to the next page
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,10 +15,15 @@ const LogIn = ({ onLogInSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/login`, formData);
-            localStorage.setItem("token", res.data.token); // Store token in localStorage
-            onLogInSuccess(); // Navigate to ChatScreen on success
+            // Send POST request with email and password
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData, {
+                withCredentials: true, // Ensures cookies are handled properly
+            });
+
+            // Navigate to the next page (e.g., ChatScreen) on successful login
+            navigate("/chat");
         } catch (err) {
+            // Display error message from server or fallback to "Login failed"
             setError(err.response?.data?.message || "Login failed");
         }
     };
@@ -30,7 +37,7 @@ const LogIn = ({ onLogInSuccess }) => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    value={formData.emaill}
+                    value={formData.email}
                     onChange={handleChange}
                     className="login-input"
                 />
@@ -43,7 +50,7 @@ const LogIn = ({ onLogInSuccess }) => {
                     className="login-input"
                 />
                 <button type="submit" className="login-button">Log In</button>
-                <a href="/signup" className="login-link">Don't have an account? Sign In</a>
+                <a href="/signup" className="login-link">Don't have an account? Sign Up</a>
             </form>
         </div>
     );
