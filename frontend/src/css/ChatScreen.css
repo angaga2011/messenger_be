@@ -31,10 +31,11 @@
     align-items: center;
     border-radius: 8px;
     transition: background-color 0.3s;
+    background-color: #909090;
 }
 
 .contact-item.selected {
-    background-color: #ddd;
+    background-color: #b7b7b7;
 }
 
 .contact-name {
@@ -81,6 +82,7 @@
 .profile-name {
     font-size: 16px;
     font-weight: bold;
+    color:#333;
 }
 
 .settings-button {
