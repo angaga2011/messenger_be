@@ -10,17 +10,16 @@ const App = () => {
     //     return !!localStorage.getItem("token"); // Check if the user is logged in
 
     return (
-        <SignUp></SignUp>
-            // <Routes>
-            //     <Route path="/signup" element={<SignUp />} />
-            //     <Route path="/login" element={<LogIn /> } />
-            //     {/* <Route path="/chat" element={
-            //             <ProtectedRoute isAuthenticated={isAuthenticated}>
-            //                 <ChatScreen />
-            //             </ProtectedRoute> } />
-            //     <Route path="/public-chat" element={<ChatScreen />} /> */}
-            //     <Route path="*" element={<Navigate to="/signup" />} />
-            // </Routes>
+            <Routes>
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<LogIn /> } />
+                {/* <Route path="/chat" element={
+                        <ProtectedRoute isAuthenticated={isAuthenticated}>
+                            <ChatScreen />
+                        </ProtectedRoute> } />
+                <Route path="/public-chat" element={<ChatScreen />} /> */}
+                <Route path="*" element={<Navigate to="/signup" />} />
+            </Routes>
     );
 };
 
