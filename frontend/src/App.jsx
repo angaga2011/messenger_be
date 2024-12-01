@@ -13,39 +13,17 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                {/* Sign Up Route */}
-                <Route
-                    path="/signup"
-                    element={
-                        <SignUp
-                            onSignUpSuccess={() => {
-                                window.location.href = "/login"; // Redirect to LogIn after SignUp
-                            }}
-                        />
-                    }
-                />
+                {/* Sign Up Route, Redirect to LogIn after SignUp */}
+                <Route path="/signup" element={ <SignUp onSignUpSuccess={() => { window.location.href = "/login"; }} /> } />
 
-                {/* Log In Route */}
-                <Route
-                    path="/login"
-                    element={
-                        <LogIn
-                            onLogInSuccess={() => {
-                                window.location.href = "/chat"; // Redirect to ChatScreen after LogIn
-                            }}
-                        />
-                    }
-                />
+                {/* Log In Route, Redirect to ChatScreen after LogIn */}
+                <Route path="/login" element={<LogIn onLogInSuccess={() => { window.location.href = "/chat"; }} /> } />
 
                 {/* Protected Chat Route */}
-                <Route
-                    path="/chat"
-                    element={
+                <Route path="/chat" element={
                         <ProtectedRoute isAuthenticated={isAuthenticated}>
                             <ChatScreen />
-                        </ProtectedRoute>
-                    }
-                />
+                        </ProtectedRoute> } />
 
                 {/* Public Chat Route (No Login Required) */}
                 <Route path="/public-chat" element={<ChatScreen />} />
