@@ -27,10 +27,10 @@ const LogIn = ({ onLogInSuccess }) => {
                 <h2 className="login-title">Log In</h2>
                 {error && <p className="login-error">{error}</p>}
                 <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={formData.username}
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.emaill}
                     onChange={handleChange}
                     className="login-input"
                 />
