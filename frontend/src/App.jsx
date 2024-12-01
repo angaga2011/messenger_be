@@ -37,7 +37,7 @@ const App = () => {
                     }
                 />
 
-                {/* Chat Screen (Protected Route) */}
+                {/* Protected Chat Route */}
                 <Route
                     path="/chat"
                     element={
@@ -46,6 +46,9 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
+
+                {/* Public Chat Route (No Login Required) */}
+                <Route path="/public-chat" element={<ChatScreen />} />
 
                 {/* Default Route (Redirect to SignUp) */}
                 <Route path="*" element={<Navigate to="/signup" />} />

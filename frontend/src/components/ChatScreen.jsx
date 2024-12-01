@@ -1,64 +1,116 @@
 import React, { useState } from "react";
-import "../css/ChatScreen.css"; // Importing the CSS file
+import "../css/ChatScreen.css";
 
 const ChatScreen = () => {
+    const [contacts] = useState([
+        { id: 1, name: "Donald Trump", isOnline: true },
+        { id: 2, name: "Obama", isOnline: false },
+        { id: 3, name: "Dolor Sit Amet", isOnline: true },
+    ]);
+
+    const [selectedContact, setSelectedContact] = useState(contacts[0]);
     const [messages, setMessages] = useState([
-        { id: 1, text: "Hello!", sender: "user" },
-        { id: 2, text: "Hi there! How can I help you today?", sender: "bot" },
+        { id: 1, text: "Hello Joe Biden!", sender: "Donald Trump", timestamp: "3:50 AM" },
+        { id: 2, text: "Wanna play some Minecraft?", sender: "Donald Trump", timestamp: "3:51 AM" },
+        { id: 3, text: "Sure, but I forgot the server's IP address.", sender: "You", timestamp: "3:52 AM" },
     ]);
     const [input, setInput] = useState("");
 
     const handleSendMessage = () => {
         if (input.trim() === "") return;
-
-        const newMessage = { id: Date.now(), text: input, sender: "user" };
+        const newMessage = {
+            id: Date.now(),
+            text: input,
+            sender: "You",
+            timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        };
         setMessages([...messages, newMessage]);
         setInput("");
-
-        // Simulate bot response
-        setTimeout(() => {
-            const botResponse = { id: Date.now(), text: "Thanks for your message!", sender: "bot" };
-            setMessages((prevMessages) => [...prevMessages, botResponse]);
-        }, 1000);
     };
 
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") handleSendMessage();
+    const handleSelectContact = (contact) => {
+        setSelectedContact(contact);
+        setMessages([]); // Clear messages for simplicity
     };
 
     return (
-        <div className="chat-container">
-            <div className="chat-header">
-                <h3>Chat</h3>
+        <div className="chat-screen">
+            {/* Contact List Section */}
+            <div className="contacts-section">
+                <div className="contact-list">
+                    {contacts.map((contact) => (
+                        <div
+                            key={contact.id}
+                            className={`contact-item ${
+                                selectedContact.id === contact.id ? "selected" : ""
+                            }`}
+                            onClick={() => handleSelectContact(contact)}
+                        >
+                            <div className="contact-info">
+                                <p className="contact-name">{contact.name}</p>
+                                <p
+                                    className={`contact-status ${
+                                        contact.isOnline ? "online" : "offline"
+                                    }`}
+                                >
+                                    {contact.isOnline ? "Online" : "Offline"}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                {/* Profile Section */}
+                <div className="profile-section">
+                    <div className="profile">
+                        <img
+                            src="https://via.placeholder.com/40"
+                            alt="Your Profile"
+                            className="profile-picture"
+                        />
+                        <p className="profile-name">Joe Biden</p>
+                    </div>
+                    <button className="settings-button">⚙️</button>
+                </div>
             </div>
-            <div className="chat-messages">
-                {messages.map((message) => (
-                    <div
-                        key={message.id}
-                        className={`chat-message ${
-                            message.sender === "user" ? "chat-user" : "chat-bot"
+
+            {/* Chat Section */}
+            <div className="chat-section">
+                <div className="chat-header">
+                    <p className="chat-contact-name">{selectedContact.name}</p>
+                    <p
+                        className={`chat-contact-status ${
+                            selectedContact.isOnline ? "online" : "offline"
                         }`}
                     >
-                        {message.text}
-                    </div>
-                ))}
-            </div>
-            <div className="chat-input-container">
-                <input
-                    type="text"
-                    className="chat-input"
-                    placeholder="Type a message..."
-                    value={input}
-                    onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
-                />
-                <button className="chat-send-button" onClick={handleSendMessage}>
-                    Send
-                </button>
+                        {selectedContact.isOnline ? "Online" : "Offline"}
+                    </p>
+                </div>
+                <div className="chat-messages">
+                    {messages.map((message) => (
+                        <div
+                            key={message.id}
+                            className={`chat-message ${
+                                message.sender === "You" ? "sent" : "received"
+                            }`}
+                        >
+                            <p className="message-text">{message.text}</p>
+                            <p className="message-timestamp">{message.timestamp}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className="chat-input-container">
+                    <input
+                        type="text"
+                        placeholder="Type a message..."
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                        className="chat-input"
+                    />
+                    <button onClick={handleSendMessage} className="send-button">
+                        ➤
+                    </button>
+                </div>
             </div>
         </div>
     );
