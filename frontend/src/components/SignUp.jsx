@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../css/SignUp.css";
 
@@ -49,7 +50,9 @@ const SignUp = ({ onSignUpSuccess }) => {
                     onChange={handleChange}
                     className="signup-input"
                 />
-                <button type="submit" className="signup-button">Sign Up</button>
+                <Link to="/login">
+                    <button type="submit" className="signup-button">Sign Up</button>
+                </Link>
                 <a href="/login" className="signup-link">Already have an account? Log In</a>
             </form>
         </div>
