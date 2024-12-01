@@ -16,11 +16,12 @@ const LogIn = () => {
         e.preventDefault();
         try {
             // Send POST request with email and password
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData, {
-                withCredentials: true, // Ensures cookies are handled properly
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+                email: formData.email,
+                password: formData.password,
             });
 
-            // Navigate to the next page (e.g., ChatScreen) on successful login
+            console.log("Server Response:", res.data);
             navigate("/chat");
         } catch (err) {
             // Display error message from server or fallback to "Login failed"
