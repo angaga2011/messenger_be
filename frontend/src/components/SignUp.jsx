@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import "../css/SignUp.css";
 
 const SignUp = ({ onSignUpSuccess }) => {
-    const [formData, setFormData] = useState({ username: "", password: "", email: "" });
+    const [formData, setFormData] = useState({ username: "", email: "", password: "" });
     const [error, setError] = useState("");
 
     const handleChange = (e) => {
@@ -13,9 +12,17 @@ const SignUp = ({ onSignUpSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/register`, formData);
-            onSignUpSuccess(); // Navigate to LogIn on success
+            // Make the POST request to the backend
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+                username: formData.username,
+                email: formData.email, // Include email in the request
+                password: formData.password,
+            });
+
+            // Call the success callback if registration succeeds
+            onSignUpSuccess();
         } catch (err) {
+            // Set error message if registration fails
             setError(err.response?.data?.message || "Sign Up failed");
         }
     };
