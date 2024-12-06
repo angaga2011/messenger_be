@@ -25,7 +25,7 @@ const Settings = () => {
   return (
     <div className="settings-container">
       {/* Back Arrow */}
-      <div className="back-arrow-container" onClick={() => navigate("/")}>
+      <div className="back-arrow-container" onClick={() => navigate("/chat")}>
         <span className="back-arrow">←</span>
       </div>
 
