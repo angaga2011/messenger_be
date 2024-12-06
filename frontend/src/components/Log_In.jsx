@@ -22,6 +22,11 @@ const LogIn = () => {
             });
             
             console.log("Server Response:", res.data);
+
+            // Save the token in localStorage
+            localStorage.setItem("token", res.data.token);
+
+            // Navigate to the chat screen
             navigate("/chat");
             
         } catch (err) {
