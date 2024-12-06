@@ -65,7 +65,7 @@ const ChatScreen = () => {
 
       if (response.ok) {
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
-        alert("Contact added successfully!");
+        alert(`${response}`);
       } else {
         const error = await response.json();
         alert(`Failed to add contact: ${error.message}`);
