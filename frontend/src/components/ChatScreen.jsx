@@ -14,17 +14,29 @@ const ChatScreen = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/contacts/get-user-contacts", {
+        // Retrieve token from localStorage and assign it to YOUR_JWT_TOKEN
+        const YOUR_JWT_TOKEN = localStorage.getItem("token");
+  
+        const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts", {
+                                      
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`, // Attach the JWT token
+            Authorization: `Bearer ${YOUR_JWT_TOKEN}`, // Use the token from localStorage
           },
         });
-
+  
         if (response.ok) {
           const data = await response.json();
-          setContacts(data.contacts || []);
+  
+          // Map the fetched data to the desired format for setContacts()
+          const formattedContacts = data.contacts.map((contact) => ({
+            id: contact.id, // Assuming contacts have an `id` field
+            name: contact.name, // Assuming contacts have a `name` field
+            email: contact.email, // Assuming contacts have an `email` field
+          }));
+  
+          setContacts(formattedContacts); // Set the formatted contacts
         } else {
           const error = await response.json();
           console.error("Failed to fetch contacts:", error.message);
@@ -33,8 +45,10 @@ const ChatScreen = () => {
         console.error("Error fetching contacts:", err);
       }
     };
-
+  
     fetchContacts();
+
+  
   }, [userToken]);
 
   const handleAddContact = async () => {
