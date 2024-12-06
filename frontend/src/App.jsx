@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import SignUp from "./SignUp";
-import LogIn from "./LogIn";
-import ChatScreen from "./ChatScreen";
-import Settings from "./Settings";
+import LogIn from "./components/Log_In";
+import SignUp from "./components/SignUp";
+import ChatScreen from "./components/ChatScreen";
+import Settings from "./components/Settings";
+
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
