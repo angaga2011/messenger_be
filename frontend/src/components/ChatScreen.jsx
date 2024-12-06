@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for naviga
 import "../css/ChatScreen.css";
 
 const ChatScreen = () => {
-  const [contacts] = useState([
+  const [contacts, setContacts] = useState([
     { id: 1, name: "Donald Trump", isOnline: true },
     { id: 2, name: "Obama", isOnline: false },
     { id: 3, name: "Dolor Sit Amet", isOnline: true },
@@ -36,8 +36,16 @@ const ChatScreen = () => {
     setMessages([]); // Clear messages for simplicity
   };
 
-  const goToSettings = () => {
-    navigate("/settings"); // Navigate to the settings page
+  const handleAddContact = () => {
+    const newContactName = prompt("Enter the name of the new contact:");
+    if (newContactName) {
+      const newContact = {
+        id: Date.now(),
+        name: newContactName,
+        isOnline: false, // New contacts are offline by default
+      };
+      setContacts([...contacts, newContact]);
+    }
   };
 
   return (
@@ -59,6 +67,10 @@ const ChatScreen = () => {
               </div>
             </div>
           ))}
+          {/* Plus Button to Add Contact */}
+          <button className="add-contact-button" onClick={handleAddContact}>
+            ➕ Add Contact
+          </button>
         </div>
         {/* Profile Section */}
         <div className="profile-section">
@@ -70,7 +82,9 @@ const ChatScreen = () => {
             />
             <p className="profile-name">Joe Biden</p>
           </div>
-          <button className="settings-button" onClick={goToSettings}>⚙️</button>
+          <button className="settings-button" onClick={() => navigate("/settings")}>
+            ⚙️
+          </button>
         </div>
       </div>
 

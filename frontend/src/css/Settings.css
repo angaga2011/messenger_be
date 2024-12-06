@@ -5,7 +5,61 @@
     width: 190vh;
     background-color: #f2f2f2;
   }
+
+/* Back Arrow */
+.back-arrow-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    font-size: 24px;
+  }
   
+  .back-arrow {
+    display: inline-block;
+    font-weight: bold;
+    color: black;
+    transition: color 0.2s ease;
+  }
+  
+  .back-arrow:hover {
+    color: gray;
+  }
+  
+  /* Text Color for Preferences */
+  .text-checked {
+    color: green; /* Text turns green when the checkbox is checked */
+    font-weight: bold;
+  }
+  
+  .text-unchecked {
+    color: red; /* Text turns red when the checkbox is unchecked */
+    font-weight: normal;
+  }
+  
+
+
+
+  .back-arrow-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .back-arrow {
+    display: inline-block;
+    font-weight: bold;
+    color: black;
+    transition: color 0.2s ease;
+  }
+  
+  .back-arrow:hover {
+    color: gray;
+  }
+  
+
   .profile-section {
     flex: 1;
     max-width: 400px;
@@ -74,6 +128,7 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+    color:black;
   }
   
   .preference-item {
@@ -82,5 +137,13 @@
     gap: 10px;
     margin-bottom: 15px;
     font-size: 16px;
+  }
+  
+  .text-checked {
+    color: green;
+  }
+  
+  .text-unchecked {
+    color: red;
   }
   

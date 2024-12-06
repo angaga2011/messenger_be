@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // For navigation
 import "../css/Settings.css";
 
 const Settings = () => {
@@ -11,6 +12,8 @@ const Settings = () => {
     { id: 5, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
   ]);
 
+  const navigate = useNavigate(); // Navigation hook
+
   const handlePreferenceChange = (id) => {
     setPreferences((prev) =>
       prev.map((pref) =>
@@ -21,6 +24,12 @@ const Settings = () => {
 
   return (
     <div className="settings-container">
+      {/* Back Arrow */}
+      <div className="back-arrow-container" onClick={() => navigate("/")}>
+        <span className="back-arrow">←</span>
+      </div>
+
+      {/* Profile Section */}
       <div className="profile-section">
         <img
           className="profile-picture"
@@ -40,6 +49,8 @@ const Settings = () => {
         </label>
         <button className="apply-button">Apply</button>
       </div>
+
+      {/* General Section */}
       <div className="general-section">
         <h2 className="section-title">General</h2>
         {preferences.map((pref) => (
@@ -49,7 +60,13 @@ const Settings = () => {
               checked={pref.checked}
               onChange={() => handlePreferenceChange(pref.id)}
             />
-            <span>{pref.text}</span>
+            <span
+              className={`preference-text ${
+                pref.checked ? "text-checked" : "text-unchecked"
+              }`}
+            >
+              {pref.text}
+            </span>
           </div>
         ))}
       </div>
