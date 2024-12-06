@@ -3,34 +3,40 @@ import { useNavigate } from "react-router-dom";
 import "../css/ChatScreen.css";
 
 const ChatScreen = () => {
-  const [contacts, setContacts] = useState([]);
-  const [selectedContact, setSelectedContact] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+  const [contacts, setContacts] = useState([]); // Contacts state
+  const [selectedContact, setSelectedContact] = useState(null); // Selected contact
+  const [messages, setMessages] = useState([]); // Messages state
+  const [input, setInput] = useState(""); // Chat input state
   const navigate = useNavigate();
+  const userToken = "YOUR_JWT_TOKEN"; // Replace with the actual token from authentication
 
   // Fetch contacts from the backend
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/contacts/getContacts", {
+        const response = await fetch("http://localhost:5000/api/contacts/get-user-contacts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`, // Attach the JWT token
           },
         });
 
-        const data = await response.json();
-        setContacts(data.contacts || []);
+        if (response.ok) {
+          const data = await response.json();
+          setContacts(data.contacts || []);
+        } else {
+          const error = await response.json();
+          console.error("Failed to fetch contacts:", error.message);
+        }
       } catch (err) {
         console.error("Error fetching contacts:", err);
       }
     };
 
     fetchContacts();
-  }, []);
+  }, [userToken]);
 
-  // Handle adding a new contact
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
@@ -40,16 +46,17 @@ const ChatScreen = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`, // Attach the JWT token
         },
         body: JSON.stringify({
-          email: "vladorangeqwer@gmail.com", // Replace with the logged-in user's email
+          email: "user@example.com", // Replace with the authenticated user's email
           contacts: [newContactEmail],
         }),
       });
 
       if (response.ok) {
-        const newContact = await response.json();
-        setContacts((prevContacts) => [...prevContacts, ...newContact.contacts]);
+        const updatedContacts = await response.json();
+        setContacts((prevContacts) => [...prevContacts, newContactEmail]);
         alert("Contact added successfully!");
       } else {
         const error = await response.json();
@@ -86,16 +93,16 @@ const ChatScreen = () => {
           {contacts.map((contact, index) => (
             <div
               key={index}
-              className={`contact-item ${selectedContact?.email === contact.email ? "selected" : ""}`}
+              className={`contact-item ${selectedContact === contact ? "selected" : ""}`}
               onClick={() => handleSelectContact(contact)}
             >
               <div className="contact-info">
-                <p className="contact-name">{contact.email}</p>
-                <p className="contact-status">{contact.isOnline ? "Online" : "Offline"}</p>
+                <p className="contact-name">{contact}</p>
+                <p className="contact-status">Offline</p>
               </div>
             </div>
           ))}
-          {/* Plus Button to Add Contact */}
+          {/* Add Contact Button */}
           <button className="add-contact-button" onClick={handleAddContact}>
             ➕ Add Contact
           </button>
@@ -119,7 +126,7 @@ const ChatScreen = () => {
       {/* Chat Section */}
       <div className="chat-section">
         <div className="chat-header">
-          <p className="chat-contact-name">{selectedContact?.email || "Select a contact"}</p>
+          <p className="chat-contact-name">{selectedContact || "Select a contact"}</p>
         </div>
         <div className="chat-messages">
           {messages.map((message) => (
