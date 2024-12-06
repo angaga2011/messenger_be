@@ -65,6 +65,7 @@ const ChatScreen = () => {
 
       if (response.ok) {
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
+        console.log(response);
         alert(`${response}`);
       } else {
         const error = await response.json();
