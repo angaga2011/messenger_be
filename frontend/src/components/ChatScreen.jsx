@@ -48,26 +48,38 @@ const ChatScreen = () => {
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
-
+  
     try {
+        
+      if (!jwt) {
+        alert("You are not logged in. Please log in first.");
+        return;
+      }
+  
       const response = await fetch(
         "https://my-messenger-backend.onrender.com/api/contacts/addContact",
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${jwt}`
+            "Content-Type": "application/json", // Ensure JSON content is specified
+            Authorization: `Bearer ${jwt}`, // Include the JWT
           },
           body: JSON.stringify({
-            contacts: [newContactEmail],
+            contacts: [newContactEmail], // Send the new contact as an array
           }),
         }
       );
-
+  
       if (response.ok) {
+        const responseData = await response.json();
+        console.log("Response from server:", responseData);
+  
+        // Add the new contact to the contacts list
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
-        console.log(response);
-        alert(`${response}`);
+  
+        alert("Contact added successfully!");
       } else {
+        // Handle response errors
         const error = await response.json();
         alert(`Failed to add contact: ${error.message}`);
       }
