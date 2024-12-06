@@ -17,7 +17,7 @@ const App = () => {
         if (!token) return false;
 
         try {
-            const response = await fetch("https://your-backend-url.com/api/auth/authenticate", {
+            const response = await fetch("https://my-messenger-backend.onrender.com/api/auth/authenticate", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`, // Include the JWT in the Authorization header
