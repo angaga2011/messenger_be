@@ -3,38 +3,37 @@ import { useNavigate } from "react-router-dom";
 import "../css/ChatScreen.css";
 
 const ChatScreen = () => {
+  const navigate = useNavigate();
+
+  // Declare JWT token at the top
+  const jwt = localStorage.getItem("token");
+
   const [contacts, setContacts] = useState([]); // Contacts state
   const [selectedContact, setSelectedContact] = useState(null); // Selected contact
   const [messages, setMessages] = useState([]); // Messages state
   const [input, setInput] = useState(""); // Chat input state
-  const navigate = useNavigate();
 
   // Fetch contacts from the backend
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const jwt = localStorage.getItem("token");
-  
-        const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts", {
-                                      
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`, // Use the token from localStorage
-          },
-        });
-  
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`, // Use the token from the top
+            },
+          }
+        );
+
         if (response.ok) {
           const data = await response.json();
-  
-          // Map the fetched data to the desired format for setContacts()
-          const formattedContacts = data.contacts.map((contact) => ({
-            id: contact.id, // Assuming contacts have an `id` field
-            name: contact.name, // Assuming contacts have a `name` field
-            email: contact.email, // Assuming contacts have an `email` field
-          }));
-  
-          setContacts(formattedContacts); // Set the formatted contacts
+          console.log("Fetched contacts:", data.contacts); // Debug log
+
+          // Set contacts directly as an array of emails
+          setContacts(data.contacts);
         } else {
           const error = await response.json();
           console.error("Failed to fetch contacts:", error.message);
@@ -43,32 +42,31 @@ const ChatScreen = () => {
         console.error("Error fetching contacts:", err);
       }
     };
-  
-    fetchContacts();
 
-  
-  }, [userToken]);
+    fetchContacts();
+  }, [jwt]);
 
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
 
     try {
-      const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/addContact", {
-        
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`, // Attach the JWT token
-        },
-        body: JSON.stringify({
-          email: "user@example.com", // Replace with the authenticated user's email
-          contacts: [newContactEmail],
-        }),
-      });
+      const response = await fetch(
+        "https://my-messenger-backend.onrender.com/api/contacts/addContact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`, // Use the token from the top
+          },
+          body: JSON.stringify({
+            email: "user@example.com", // Replace with the authenticated user's email
+            contacts: [newContactEmail],
+          }),
+        }
+      );
 
       if (response.ok) {
-        const updatedContacts = await response.json();
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
         alert("Contact added successfully!");
       } else {
@@ -103,14 +101,14 @@ const ChatScreen = () => {
       {/* Contact List Section */}
       <div className="contacts-section">
         <div className="contact-list">
-          {contacts.map((contact, index) => (
+          {contacts.map((email, index) => (
             <div
               key={index}
-              className={`contact-item ${selectedContact === contact ? "selected" : ""}`}
-              onClick={() => handleSelectContact(contact)}
+              className={`contact-item ${selectedContact === email ? "selected" : ""}`}
+              onClick={() => handleSelectContact(email)}
             >
               <div className="contact-info">
-                <p className="contact-name">{contact}</p>
+                <p className="contact-name">{email}</p> {/* Render email directly */}
                 <p className="contact-status">Offline</p>
               </div>
             </div>
@@ -139,7 +137,9 @@ const ChatScreen = () => {
       {/* Chat Section */}
       <div className="chat-section">
         <div className="chat-header">
-          <p className="chat-contact-name">{selectedContact || "Select a contact"}</p>
+          <p className="chat-contact-name">
+            {selectedContact || "Select a contact"}
+          </p>
         </div>
         <div className="chat-messages">
           {messages.map((message) => (
