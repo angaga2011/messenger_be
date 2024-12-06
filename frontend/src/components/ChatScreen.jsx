@@ -8,21 +8,19 @@ const ChatScreen = () => {
   const [messages, setMessages] = useState([]); // Messages state
   const [input, setInput] = useState(""); // Chat input state
   const navigate = useNavigate();
-  const userToken = "YOUR_JWT_TOKEN"; // Replace with the actual token from authentication
 
   // Fetch contacts from the backend
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        // Retrieve token from localStorage and assign it to YOUR_JWT_TOKEN
-        const YOUR_JWT_TOKEN = localStorage.getItem("token");
+        const jwt = localStorage.getItem("token");
   
         const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts", {
                                       
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${YOUR_JWT_TOKEN}`, // Use the token from localStorage
+            Authorization: `Bearer ${jwt}`, // Use the token from localStorage
           },
         });
   
