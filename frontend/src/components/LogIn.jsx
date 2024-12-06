@@ -21,7 +21,7 @@ const LogIn = () => {
                 password: formData.password,
             });
             //
-            //console.log("Server Response:", res.data);
+            console.log("Server Response:", res.data);
             navigate("/chat");
             
         } catch (err) {

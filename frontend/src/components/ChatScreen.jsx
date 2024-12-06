@@ -13,7 +13,7 @@ const ChatScreen = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/contacts/get-user-contacts", {
+        const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -40,7 +40,8 @@ const ChatScreen = () => {
     if (!newContactEmail) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/contacts/addContact", {
+      const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/addContact", {
+        
         method: "POST",
         headers: {
           "Content-Type": "application/json",
