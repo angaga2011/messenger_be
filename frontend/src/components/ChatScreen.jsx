@@ -8,16 +8,17 @@ const ChatScreen = () => {
   const [messages, setMessages] = useState([]); // Messages state
   const [input, setInput] = useState(""); // Chat input state
   const navigate = useNavigate();
+  const userToken = "YOUR_JWT_TOKEN"; // Replace with the actual token from authentication
 
   // Fetch contacts from the backend
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await fetch("https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts", {
+        const response = await fetch("http://localhost:5000/api/contacts/get-user-contacts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with the user's JWT token
+            Authorization: `Bearer ${userToken}`, // Attach the JWT token
           },
         });
 
@@ -25,7 +26,8 @@ const ChatScreen = () => {
           const data = await response.json();
           setContacts(data.contacts || []);
         } else {
-          console.error("Failed to fetch contacts:", await response.json());
+          const error = await response.json();
+          console.error("Failed to fetch contacts:", error.message);
         }
       } catch (err) {
         console.error("Error fetching contacts:", err);
@@ -33,7 +35,7 @@ const ChatScreen = () => {
     };
 
     fetchContacts();
-  }, []);
+  }, [userToken]);
 
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
@@ -45,17 +47,17 @@ const ChatScreen = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with the user's JWT token
+          Authorization: `Bearer ${userToken}`, // Attach the JWT token
         },
         body: JSON.stringify({
-          email: "user@example.com", // Replace with the logged-in user's email
+          email: "user@example.com", // Replace with the authenticated user's email
           contacts: [newContactEmail],
         }),
       });
 
       if (response.ok) {
         const updatedContacts = await response.json();
-        setContacts((prevContacts) => [...prevContacts, ...updatedContacts.contacts]);
+        setContacts((prevContacts) => [...prevContacts, newContactEmail]);
         alert("Contact added successfully!");
       } else {
         const error = await response.json();
@@ -92,7 +94,7 @@ const ChatScreen = () => {
           {contacts.map((contact, index) => (
             <div
               key={index}
-              className={`contact-item ${selectedContact?.email === contact.email ? "selected" : ""}`}
+              className={`contact-item ${selectedContact === contact ? "selected" : ""}`}
               onClick={() => handleSelectContact(contact)}
             >
               <div className="contact-info">

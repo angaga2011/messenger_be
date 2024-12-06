@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import LogIn from "./components/LogIn";
+import LogIn from "./components/Log_In";
 import SignUp from "./components/SignUp";
 import ChatScreen from "./components/ChatScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
