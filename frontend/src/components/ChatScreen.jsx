@@ -50,7 +50,7 @@ const ChatScreen = () => {
     if (!newContactEmail) return;
   
     try {
-        
+
       if (!jwt) {
         alert("You are not logged in. Please log in first.");
         return;
@@ -87,6 +87,11 @@ const ChatScreen = () => {
       console.error("Error adding contact:", err);
       alert("An error occurred while adding the contact.");
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/signup");
   };
 
   const handleSendMessage = () => {
@@ -138,6 +143,9 @@ const ChatScreen = () => {
             />
             <p className="profile-name">Joe Biden</p>
           </div>
+          <button onClick={handleLogout} className="logout-button">
+          Logout 🔐 
+        </button>
           <button className="settings-button" onClick={() => navigate("/settings")}>
             ⚙️
           </button>
