@@ -1,0 +1,86 @@
+.settings-container {
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    width: 190vh;
+    background-color: #f2f2f2;
+  }
+  
+  .profile-section {
+    flex: 1;
+    max-width: 400px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+    text-align: center;
+  }
+  
+  .edit-icon {
+    font-size: 16px;
+    cursor: pointer;
+    color: gray;
+    margin-left: 5px;
+  }
+  
+  .online-toggle {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+  }
+  
+  .apply-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #d1d1d1;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .apply-button:hover {
+    background-color: #bcbcbc;
+  }
+  
+  .general-section {
+    flex: 2;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .preference-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  

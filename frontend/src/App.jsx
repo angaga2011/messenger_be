@@ -4,6 +4,8 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import ChatScreen from "./components/ChatScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Settings from "./components/Settings";
+
 
 const App = () => {
     // const isAuthenticated = () => {
@@ -13,6 +15,9 @@ const App = () => {
             <Routes>
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<LogIn /> } />
+                <Route path="/chat" element={<ChatScreen /> } />
+                <Route path="/settings" element={<Settings />} />
+
                 {/* <Route path="/chat" element={
                         <ProtectedRoute isAuthenticated={isAuthenticated}>
                             <ChatScreen />

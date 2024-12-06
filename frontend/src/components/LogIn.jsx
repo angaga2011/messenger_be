@@ -20,9 +20,10 @@ const LogIn = () => {
                 email: formData.email,
                 password: formData.password,
             });
-
-            console.log("Server Response:", res.data);
+            //
+            //console.log("Server Response:", res.data);
             navigate("/chat");
+            
         } catch (err) {
             // Display error message from server or fallback to "Login failed"
             setError(err.response?.data?.message || "Login failed");
