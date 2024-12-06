@@ -42,7 +42,7 @@ const ChatScreen = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "user@example.com", // Replace with the logged-in user's email
+          email: "vladorangeqwer@gmail.com", // Replace with the logged-in user's email
           contacts: [newContactEmail],
         }),
       });
