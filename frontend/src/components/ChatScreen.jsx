@@ -55,11 +55,9 @@ const ChatScreen = () => {
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`, // Use the token from the top
+            Authorization: `Bearer ${jwt}`
           },
           body: JSON.stringify({
-            email: "user@example.com", // Replace with the authenticated user's email
             contacts: [newContactEmail],
           }),
         }
