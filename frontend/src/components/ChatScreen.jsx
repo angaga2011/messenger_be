@@ -22,8 +22,7 @@ const ChatScreen = () => {
           {
             method: "GET",
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`, // Use the token from the top
+              Authorization: `Bearer ${jwt}`
             },
           }
         );
