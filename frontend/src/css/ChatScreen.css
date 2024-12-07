@@ -85,10 +85,10 @@
 
 /* Profile Section */
 .profile-section {
-    padding: 10px;
+    /* padding: 10px; */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    /* align-items: center; */
     border-top: 1px solid #ccc;
     background-color: #f1f1f1;
 }
@@ -96,6 +96,8 @@
 .profile {
     display: flex;
     align-items: center;
+    width: 30px;
+    height: 30px;
 }
 
 .profile-picture {
