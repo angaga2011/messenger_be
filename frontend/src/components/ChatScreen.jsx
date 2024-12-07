@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import io from 'socket.io-client';
 import "../css/ChatScreen.css";
 
 const ChatScreen = () => {
@@ -12,6 +13,7 @@ const ChatScreen = () => {
   const [selectedContact, setSelectedContact] = useState(null); // Selected contact
   const [messages, setMessages] = useState([]); // Messages state
   const [input, setInput] = useState(""); // Chat input state
+  const [socket, setSocket] = useState(null);
 
   // Fetch contacts from the backend
   useEffect(() => {
@@ -77,6 +79,34 @@ const ChatScreen = () => {
     fetchMessages();
   }, [jwt]);
 
+  useEffect(() => {
+    const newSocket = io('https://my-messenger-backend.onrender.com');
+    setSocket(newSocket);
+
+    newSocket.on('connect', () => {
+      console.log('Connected to socket server:', newSocket.id);
+    });
+
+    newSocket.on('receive_message', (message) => {
+      console.log('Message received:', message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    newSocket.on('message_saved', (data) => {
+      if (data.success) {
+        console.log('Message saved successfully');
+      }
+    });
+
+    newSocket.on('disconnect', () => {
+      console.log('Disconnected from socket server');
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
@@ -101,7 +131,7 @@ const ChatScreen = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Ensure JSON content is specified
-            Authorization: `Bearer ${jwconstt}`, // Include the JWT
+            Authorization: `Bearer ${jwt}`, // Include the JWT
           },
           body: JSON.stringify({
             contacts: [newContactEmail], // Send the new contact as an array
@@ -133,21 +163,21 @@ const ChatScreen = () => {
     navigate("/signup");
   };
 
-  const handleSendMessage = () => {
-    if (input.trim() === "") return;
-    const newMessage = {
-      id: Date.now(),
-      text: input,
-      sender: "You",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-    };
-    setMessages([...messages, newMessage]);
-    setInput("");
-  };
-
   const handleSelectContact = (contact) => {
     setSelectedContact(contact);
     setMessages([]); // Clear messages for simplicity
+  };
+
+  const handleSendMessage = (receiver, content) => {
+    if (!socket) return;
+
+    const messageData = {
+      sender: 'your-sender-id', // Replace with actual sender ID
+      receiver,
+      content,
+    };
+
+    socket.emit('send_message', messageData);
   };
 
   return (
