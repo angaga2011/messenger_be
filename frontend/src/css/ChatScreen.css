@@ -1,27 +1,24 @@
 /* ChatScreen Layout */
 
 .add-contact-button {
-    width: 5vw; /* Changed from 3rem to 5vw */
-    height: 5vw; /* Changed from 3rem to 5vw */
-    margin: 2vw; /* Changed from 1rem to 2vw */
+    width: 3rem; /* Changed from 30px to 3rem */
+    height: 3rem; /* Changed from 30px to 3rem */
+    margin: 1rem; /* Changed from 10px to 1rem */
     border-radius: 50%;
     background-color: #007bff;
     color: white;
     border: none;
-    font-size: 2.5vw; /* Changed from 1.8rem to 2.5vw */
+    font-size: 1.8rem; /* Changed from 18px to 1.8rem */
     cursor: pointer;
     text-align: center;
 }
 
-.add-contact-button:hover {
-    background-color: #0056b3;
-}
 
 .no-contact-selected {
     text-align: center;
-    font-size: 2.5vw; /* Changed from 1.8rem to 2.5vw */
+    font-size: 1.8rem; /* Changed from 18px to 1.8rem */
     color: #666;
-    margin-top: 10vh; /* Changed from 5rem to 10vh */
+    margin-top: 5rem; /* Changed from 50px to 5rem */
 }
 
 .chat-screen {
