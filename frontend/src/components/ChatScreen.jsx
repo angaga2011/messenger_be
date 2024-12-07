@@ -50,13 +50,11 @@ const ChatScreen = () => {
     if (!newContactEmail) return;
   
     // Check if the contact is already in the list before making the API call
-    setContacts((prevContacts) => {
-      if (prevContacts.includes(newContactEmail)) {
-        alert("Contact already added.");
-        throw new Error("Contact already added.");
-      }
-      return prevContacts;
-    });
+    const isContactAlreadyAdded = contacts.includes(newContactEmail);
+    if (isContactAlreadyAdded) {
+      alert("Contact already added.");
+      return;
+    }
 
     try {
 
