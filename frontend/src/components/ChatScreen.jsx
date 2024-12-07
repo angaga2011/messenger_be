@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
+import axios from 'axios';
 
-const ChatScreen = ({ userEmail }) => {
+const ChatScreen = () => {
   const navigate = useNavigate();
-
-  // Declare JWT token at the top
-  const jwt = localStorage.getItem("token");
 
   const [contacts, setContacts] = useState([]); // Contacts state
   const [selectedContact, setSelectedContact] = useState(null); // Selected contact
@@ -19,25 +17,19 @@ const ChatScreen = ({ userEmail }) => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await fetch(
-          "https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${jwt}`
-            },
-          }
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/contacts/get-user-contacts`,
+          { withCredentials: true }
         );
 
-        if (response.ok) {
-          const data = await response.json();
+        if (response.status === 200) {
+          const data = response.data;
           console.log("Fetched contacts:", data.contacts); // Debug log
 
           // Set contacts directly as an array of emails
           setContacts(data.contacts);
         } else {
-          const error = await response.json();
-          console.error("Failed to fetch contacts:", error.message);
+          console.error("Failed to fetch contacts:", response.data.message);
         }
       } catch (err) {
         console.error("Error fetching contacts:", err);
@@ -45,30 +37,24 @@ const ChatScreen = ({ userEmail }) => {
     };
 
     fetchContacts();
-  }, [jwt]);
+  }, []);
 
   // Fetch messages from the backend
   const fetchMessages = async (contactEmail) => {
     try {
-      const response = await fetch(
-        `https://my-messenger-backend.onrender.com/api/messages/get-user-messages?contactEmail=${contactEmail}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${jwt}`
-          },
-        }
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/messages/get-user-messages?contactEmail=${contactEmail}`,
+        { withCredentials: true }
       );
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response.status === 200) {
+        const data = response.data;
         console.log("Fetched messages:", data.messages); // Debug log
 
         // Set messages directly as an array of messages
         setMessages(data.messages);
       } else {
-        const error = await response.json();
-        console.error("Failed to fetch messages:", error.message);
+        console.error("Failed to fetch messages:", response.data.message);
       }
     } catch (err) {
       console.error("Error fetching messages:", err);
@@ -76,7 +62,7 @@ const ChatScreen = ({ userEmail }) => {
   };
 
   useEffect(() => {
-    const newSocket = io('https://my-messenger-backend.onrender.com');
+    const newSocket = io(`${import.meta.env.VITE_API_URL}`);
     setSocket(newSocket);
 
     newSocket.on('connect', () => {
@@ -115,38 +101,22 @@ const ChatScreen = ({ userEmail }) => {
     }
 
     try {
-
-      if (!jwt) {
-        alert("You are not logged in. Please log in first.");
-        return;
-      }
-  
-      const response = await fetch(
-        "https://my-messenger-backend.onrender.com/api/contacts/addContact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // Ensure JSON content is specified
-            Authorization: `Bearer ${jwt}`, // Include the JWT
-          },
-          body: JSON.stringify({
-            contacts: [newContactEmail], // Send the new contact as an array
-          }),
-        }
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/contacts/addContact`,
+        { contacts: [newContactEmail] },
+        { withCredentials: true }
       );
-  
-      if (response.ok) {
-        const responseData = await response.json();
+
+      if (response.status === 200) {
+        const responseData = response.data;
         console.log("Response from server:", responseData);
-  
+
         // Update the state with the new contact
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
           
         alert("Contact added successfully!");
       } else {
-        // Handle response errors
-        const error = await response.json();
-        alert(`Failed to add contact: ${error.message}`);
+        alert(`Failed to add contact: ${response.data.message}`);
       }
     } catch (err) {
       console.error("Error adding contact:", err);
@@ -155,7 +125,8 @@ const ChatScreen = ({ userEmail }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // Clear the cookie by setting it to expire immediately
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     navigate("/signup");
   };
 
@@ -175,7 +146,6 @@ const ChatScreen = ({ userEmail }) => {
     };
 
     const messageData = {
-      token: jwt,
       receiver: selectedContact,
       content: input,
     };
