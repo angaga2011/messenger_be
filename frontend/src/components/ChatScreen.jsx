@@ -74,10 +74,11 @@ const ChatScreen = () => {
         const responseData = await response.json();
         console.log("Response from server:", responseData);
   
-        // Add the new contact to the contacts list if not already added
+        // Check if the contact is already in the list before updating the state
         setContacts((prevContacts) => {
           if (prevContacts.includes(newContactEmail)) {
-            throw new Error("Contact already added.");
+            alert("Contact already added.");
+            return prevContacts; // Return the previous state without changes
           }
           return [...prevContacts, newContactEmail];
         });
