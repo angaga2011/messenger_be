@@ -86,7 +86,7 @@
 /* Profile Section */
 .profile-section {
     /* padding: 10px; */
-    display: flex;
+    /* display: flex; */
     /* justify-content: space-between; */
     /* align-items: center; */
     border-top: 1px solid #ccc;
@@ -94,7 +94,7 @@
 }
 
 .profile {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     width: 30px;
     height: 30px;
