@@ -45,7 +45,7 @@ const ChatScreen = () => {
     fetchContacts();
   }, [jwt]);
 
-  const handleAddContact = async () => {
+   handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
   
@@ -62,7 +62,7 @@ const ChatScreen = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Ensure JSON content is specified
-            Authorization: `Bearer ${jwt}`, // Include the JWT
+            Authorization: `Bearer ${jwconstt}`, // Include the JWT
           },
           body: JSON.stringify({
             contacts: [newContactEmail], // Send the new contact as an array
