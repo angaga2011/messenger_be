@@ -1,10 +1,9 @@
 /* ChatScreen Layout */
 
 .add-contact-button {
-    width: 270px;
+    width:100%;
     height: 70px;
     background-color: #007bff;
-    margin-left: 5px;
     color: white;
     border: none;
     font-size: 18px;
