@@ -26,19 +26,29 @@
 
 .chat-screen {
     display: flex;
-    height: 100vh;
+    height: 100vh; /* Make the chat screen take full window height */
     width: 190vh;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
-/* Contacts Section */
 .contacts-section {
-    width: 25%;
-    background-color: #f1f1f1;
+    width: 25vw; /* 25% of the viewport width */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Scrollable if content overflows */
+    background-color: #f1f1f1; /* Background color for contacts section */
+    padding: 1vw; /* Padding for inner spacing */
     display: flex;
     flex-direction: column;
     border-right: 1px solid #ccc;
+}
+
+.messages-section {
+    flex-grow: 1; /* Take the remaining space */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Scrollable if content overflows */
+    background-color: #ffffff; /* Background color for messages section */
+    padding: 1vw; /* Padding for inner spacing */
 }
 
 /* Contact List */

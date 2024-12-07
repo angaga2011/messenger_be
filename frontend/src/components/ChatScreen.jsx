@@ -50,7 +50,7 @@ const ChatScreen = () => {
     const fetchMessages = async () => {
       try {
         const response = await fetch(
-          "https://my-messenger-backend.onrender.com/api/contacts/get-user-messages",
+          "https://my-messenger-backend.onrender.com/api/messages/get-user-messages",
           {
             method: "GET",
             headers: {
