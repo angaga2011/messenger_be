@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
@@ -169,16 +168,25 @@ const ChatScreen = ({ userEmail }) => {
     setMessages([]); // Clear messages for simplicity
   };
 
-  const handleSendMessage = (receiver, content) => {
-    if (!socket) return;
+  const handleSendMessage = () => {
+    if (!socket || input.trim() === "" || !selectedContact) return;
+
+    const newMessage = {
+      id: Date.now(),
+      text: input,
+      sender: "You",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
 
     const messageData = {
-      sender: 'your-sender-id', // Replace with actual sender ID
-      receiver,
-      content,
+      token: jwt,
+      receiver: selectedContact,
+      content: input,
     };
 
     socket.emit('send_message', messageData);
+    setMessages([...messages, newMessage]);
+    setInput("");
   };
 
   return (
