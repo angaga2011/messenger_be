@@ -33,11 +33,8 @@
 }
 
 .contacts-section {
-    width: 25vw; /* 25% of the viewport width */
-    height: 100%; /* Full height */
-    overflow-y: auto; /* Scrollable if content overflows */
-    background-color: #f1f1f1; /* Background color for contacts section */
-    padding: 1vw; /* Padding for inner spacing */
+    width: 25%;
+    background-color: #f1f1f1;
     display: flex;
     flex-direction: column;
     border-right: 1px solid #ccc;
