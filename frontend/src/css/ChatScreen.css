@@ -1,8 +1,8 @@
 /* ChatScreen Layout */
 
 .add-contact-button {
-    width: 30px;
-    height: 30px;
+    width: 100px;
+    height: 40px;
     margin: 10px;
     border-radius: 50%;
     background-color: #007bff;
