@@ -48,22 +48,21 @@ const ChatScreen = ({ userEmail }) => {
   }, [jwt]);
 
   // Fetch messages from the backend
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch(
-          "https://my-messenger-backend.onrender.com/api/messages/get-user-messages",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${jwt}`
-            },
-          }
-        );
+  const fetchMessages = async (contactEmail) => {
+    try {
+      const response = await fetch(
+        `https://my-messenger-backend.onrender.com/api/messages/get-user-messages?contactEmail=${contactEmail}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          },
+        }
+      );
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Fetched messages:", data.messages); // Debug log
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Fetched messages:", data.messages); // Debug log
 
         // Set messages directly as an array of messages
         setMessages(data.messages);
@@ -73,11 +72,8 @@ const ChatScreen = ({ userEmail }) => {
       }
     } catch (err) {
       console.error("Error fetching messages:", err);
-      }
-    };
-
-    fetchMessages();
-  }, [jwt]);
+    }
+  };
 
   useEffect(() => {
     const newSocket = io('https://my-messenger-backend.onrender.com');
@@ -165,7 +161,7 @@ const ChatScreen = ({ userEmail }) => {
 
   const handleSelectContact = (contact) => {
     setSelectedContact(contact);
-    setMessages([]); // Clear messages for simplicity
+    fetchMessages(contact); // Fetch messages for the selected contact
   };
 
   const handleSendMessage = () => {
