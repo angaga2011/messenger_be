@@ -50,22 +50,33 @@ const ChatScreen = ({ userEmail }) => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('/api/get-user-messages');
-        const fetchedMessages = response.data;
-
-        // Filter messages based on the user's email
-        const filteredMessages = fetchedMessages.filter(
-          (message) => message.sender === userEmail || message.receiver === userEmail
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/messages/get-user-messages",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${jwt}`
+            },
+          }
         );
 
-        setMessages(filteredMessages);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Fetched messages:", data.messages); // Debug log
+
+        // Set messages directly as an array of messages
+        setMessages(data.messages);
+      } else {
+        const error = await response.json();
+        console.error("Failed to fetch messages:", error.message);
+      }
+    } catch (err) {
+      console.error("Error fetching messages:", err);
       }
     };
 
     fetchMessages();
-  }, [userEmail]);
+  }, [jwt]);
 
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
@@ -192,11 +203,11 @@ const ChatScreen = ({ userEmail }) => {
         <div className="chat-messages">
           {messages.map((message) => (
             <div
-              key={message._id}
-              className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
+            key={message.id}
+            className={`chat-message ${message.sender === "You" ? "sent" : "received"}`}
             >
-              <p className="message-text">{message.content}</p>
-              <p className="message-timestamp">{new Date(message.createdAt).toLocaleString()}</p>
+              <p className="message-text">{message.text}</p>
+              <p className="message-timestamp">{message.timestamp}</p>
             </div>
           ))}
         </div>
