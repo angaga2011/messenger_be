@@ -45,6 +45,38 @@ const ChatScreen = () => {
     fetchContacts();
   }, [jwt]);
 
+  // Fetch messages from the backend
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/contacts/get-user-messages",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${jwt}`
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Fetched messages:", data.messages); // Debug log
+
+          // Set messages directly as an array of messages
+          setMessages(data.messages);
+        } else {
+          const error = await response.json();
+          console.error("Failed to fetch messages:", error.message);
+        }
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+      }
+    };
+
+    fetchMessages();
+  }, [jwt]);
+
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
