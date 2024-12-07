@@ -49,6 +49,15 @@ const ChatScreen = () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
   
+    // Check if the contact is already in the list before making the API call
+    setContacts((prevContacts) => {
+      if (prevContacts.includes(newContactEmail)) {
+        alert("Contact already added.");
+        throw new Error("Contact already added.");
+      }
+      return prevContacts;
+    });
+
     try {
 
       if (!jwt) {
@@ -74,14 +83,8 @@ const ChatScreen = () => {
         const responseData = await response.json();
         console.log("Response from server:", responseData);
   
-        // Check if the contact is already in the list before updating the state
-        setContacts((prevContacts) => {
-          if (prevContacts.includes(newContactEmail)) {
-            alert("Contact already added.");
-            return prevContacts; // Return the previous state without changes
-          }
-          return [...prevContacts, newContactEmail];
-        });
+        // Update the state with the new contact
+        setContacts((prevContacts) => [...prevContacts, newContactEmail]);
           
         alert("Contact added successfully!");
       } else {
