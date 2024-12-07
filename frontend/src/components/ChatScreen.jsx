@@ -45,10 +45,49 @@ const ChatScreen = () => {
     fetchContacts();
   }, [jwt]);
 
-   handleAddContact = async () => {
+  // Fetch messages from the backend
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/messages/get-user-messages",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${jwt}`
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Fetched messages:", data.messages); // Debug log
+
+          // Set messages directly as an array of messages
+          setMessages(data.messages);
+        } else {
+          const error = await response.json();
+          console.error("Failed to fetch messages:", error.message);
+        }
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+      }
+    };
+
+    fetchMessages();
+  }, [jwt]);
+
+  const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
   
+    // Check if the contact is already in the list before making the API call
+    const isContactAlreadyAdded = contacts.includes(newContactEmail);
+    if (isContactAlreadyAdded) {
+      alert("Contact already added.");
+      return;
+    }
+
     try {
 
       if (!jwt) {
@@ -74,9 +113,9 @@ const ChatScreen = () => {
         const responseData = await response.json();
         console.log("Response from server:", responseData);
   
-        // Add the new contact to the contacts list
+        // Update the state with the new contact
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
-  
+          
         alert("Contact added successfully!");
       } else {
         // Handle response errors

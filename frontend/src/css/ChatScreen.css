@@ -1,8 +1,8 @@
 /* ChatScreen Layout */
 
-/* .add-contact-button {
-    width: 30px;
-    height: 30px;
+.add-contact-button {
+    width: 100px;
+    height: 40px;
     margin: 10px;
     border-radius: 50%;
     background-color: #007bff;
@@ -11,36 +11,38 @@
     font-size: 18px;
     cursor: pointer;
     text-align: center;
-  }
-  
-  .add-contact-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .no-contact-selected {
-    text-align: center;
-    font-size: 18px;
-    color: #666;
-    margin-top: 50px;
-  }
-   */
+}
 
+
+.no-contact-selected {
+    text-align: center;
+    font-size: 1.8rem; /* Changed from 18px to 1.8rem */
+    color: #666;
+    margin-top: 5rem; /* Changed from 50px to 5rem */
+}
 
 .chat-screen {
     display: flex;
-    height: 100vh;
+    height: 100vh; /* Make the chat screen take full window height */
     width: 190vh;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
 
-/* Contacts Section */
 .contacts-section {
     width: 25%;
     background-color: #f1f1f1;
     display: flex;
     flex-direction: column;
     border-right: 1px solid #ccc;
+}
+
+.messages-section {
+    flex-grow: 1; /* Take the remaining space */
+    height: 100%; /* Full height */
+    overflow-y: auto; /* Scrollable if content overflows */
+    background-color: #ffffff; /* Background color for messages section */
+    padding: 1vw; /* Padding for inner spacing */
 }
 
 /* Contact List */
