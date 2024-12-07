@@ -207,7 +207,7 @@ const ChatScreen = ({ userEmail }) => {
         <div className="profile-section">
           <div className="profile">
             <img
-              src="https://via.placeholder.com/40"
+              src="https://via.placeholder.com/20"
               alt="Your Profile"
               className="profile-picture"
             />
