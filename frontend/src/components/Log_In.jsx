@@ -26,8 +26,8 @@ const LogIn = () => {
             // Save the token in localStorage
             localStorage.setItem("token", res.data.token);
 
-            // Navigate to the chat screen
-            navigate("/chat");
+            // Navigate to the chat screen and pass the email as state
+            navigate("/chat", { state: { email: formData.email } });
             
         } catch (err) {
             // Display error message from server or fallback to "Login failed"

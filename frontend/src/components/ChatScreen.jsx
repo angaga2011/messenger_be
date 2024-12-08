@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
 
-const ChatScreen = ({ userEmail }) => {
+const ChatScreen = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const userEmail = location.state?.email; // Get the email from location state
 
   // Declare JWT token at the top
   const jwt = localStorage.getItem("token");
@@ -170,7 +172,7 @@ const ChatScreen = ({ userEmail }) => {
     const newMessage = {
       id: Date.now(),
       text: input,
-      sender: "You",
+      sender: "userEmail",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
@@ -237,7 +239,7 @@ const ChatScreen = ({ userEmail }) => {
           {messages.map((message) => (
             <div
             key={message.id}
-            className={`chat-message ${message.sender === "You" ? "sent" : "received"}`}
+            className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
             >
               <p className="message-text">{message.text}</p>
               <p className="message-timestamp">{message.timestamp}</p>
@@ -250,7 +252,7 @@ const ChatScreen = ({ userEmail }) => {
             placeholder="Type a message..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+            onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
             className="chat-input"
           />
           <button onClick={handleSendMessage} className="send-button">
