@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
@@ -15,6 +15,14 @@ const ChatScreen = () => {
   const [messages, setMessages] = useState([]); // Messages state
   const [input, setInput] = useState(""); // Chat input state
   const [socket, setSocket] = useState(null);
+
+  // Create a ref for the chat messages container
+  const messagesEndRef = useRef(null);
+
+  // Function to scroll to the bottom of the chat
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   // Fetch contacts from the backend
   useEffect(() => {
@@ -107,6 +115,10 @@ const ChatScreen = () => {
       newSocket.disconnect();
     };
   }, [userEmail, selectedContact]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
@@ -257,6 +269,8 @@ const ChatScreen = () => {
               <p className="message-timestamp">{new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
             </div>
           ))}
+          {/* Add a div to act as the end of the messages */}
+          <div ref={messagesEndRef} />
         </div>
         <div className="chat-input-container">
           <input
