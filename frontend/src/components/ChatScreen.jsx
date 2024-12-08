@@ -219,7 +219,8 @@ const ChatScreen = () => {
               alt="Your Profile"
               className="profile-picture"
             /> */}
-            <p className="profile-name">Joe Biden</p>
+            
+            <p className="profile-name">{userEmail}</p>
           </div>
           <button onClick={handleLogout} className="logout-button">
           Logout 🔐 
