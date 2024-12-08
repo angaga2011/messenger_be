@@ -101,6 +101,11 @@ const ChatScreen = () => {
       }
     });
 
+    newSocket.on('contact_added', (data) => {
+      console.log('Contact added:', data);
+      fetchContacts(); // Refresh contacts list
+    });
+
     newSocket.on('message_saved', (data) => {
       if (data.success) {
         console.log('Message saved successfully');
@@ -115,6 +120,10 @@ const ChatScreen = () => {
       newSocket.disconnect();
     };
   }, [userEmail, selectedContact]);
+
+  useEffect(() => {
+    fetchContacts();
+  }, [jwt]);
 
   useEffect(() => {
     scrollToBottom();
@@ -132,7 +141,6 @@ const ChatScreen = () => {
     }
 
     try {
-
       if (!jwt) {
         alert("You are not logged in. Please log in first.");
         return;
@@ -235,17 +243,11 @@ const ChatScreen = () => {
         {/* Profile Section */}
         <div className="profile-section">
           <div className="profile">
-            {/* <img
-              src="https://via.placeholder.com/40"
-              alt="Your Profile"
-              className="profile-picture"
-            /> */}
-            
             <p className="profile-name">{userEmail}</p>
           </div>
           <button onClick={handleLogout} className="logout-button">
-          Logout 🔐 
-        </button>
+            Logout 🔐 
+          </button>
           <button className="settings-button" onClick={() => navigate("/settings")}>
             ⚙️
           </button>
@@ -262,8 +264,8 @@ const ChatScreen = () => {
         <div className="chat-messages">
           {memoizedMessages.map((message) => (
             <div
-            key={message.id}
-            className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
+              key={message.id}
+              className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
             >
               <p className="message-text">{message.content}</p>
               <p className="message-timestamp">{new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
