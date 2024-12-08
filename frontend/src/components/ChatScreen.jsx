@@ -170,10 +170,9 @@ const ChatScreen = () => {
     if (!socket || input.trim() === "" || !selectedContact) return;
 
     const newMessage = {
-      id: Date.now(),
-      text: input,
+      content: input,
       sender: userEmail,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      createdAt: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
     const messageData = {
