@@ -193,7 +193,7 @@ const ChatScreen = () => {
     const newMessage = {
       content: input,
       sender: userEmail,
-      createdAt: new Date(), // Store the Date object directly
+      createdAt: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
     const messageData = {
