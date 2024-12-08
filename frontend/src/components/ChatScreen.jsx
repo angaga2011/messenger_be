@@ -167,9 +167,14 @@ const ChatScreen = () => {
   };
 
   const handleSelectContact = (contactEmail) => {
+    console.log('Contact selected:', contactEmail); // Debug log
     setSelectedContact(contactEmail);
-    fetchMessages(contactEmail); // Fetch messages for the selected contact
+    fetchMessages(contactEmail);
   };
+
+  useEffect(() => {
+    console.log('Selected contact updated:', selectedContact); // Debug log
+  }, [selectedContact]);
 
   const handleSendMessage = () => {
     if (!socket || input.trim() === "" || !selectedContact) return;
