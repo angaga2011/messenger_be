@@ -5,16 +5,23 @@ import SignUp from "./components/SignUp";
 import ChatScreen from "./components/ChatScreen";
 import Settings from "./components/Settings";
 
+// import ProtectedRoute from "./components/ProtectedRoute";
+
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true); // State to manage loading while checking authentication
 
     // Function to validate the token by calling the backend's authenticate function
     const authenticate = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return false;
+
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/authenticate`, {
+            const response = await fetch("https://my-messenger-backend.onrender.com/api/auth/authenticate", {
                 method: "GET",
-                credentials: "include", // Include credentials in the request
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the JWT in the Authorization header
+                },
             });
 
             const data = await response.json();
