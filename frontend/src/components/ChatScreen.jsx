@@ -82,6 +82,7 @@ const ChatScreen = () => {
 
     newSocket.on('connect', () => {
       console.log('Connected to socket server:', newSocket.id);
+      newSocket.emit('register_email', { email: userEmail });
     });
 
     newSocket.on('receive_message', (message) => {
@@ -102,7 +103,7 @@ const ChatScreen = () => {
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [userEmail]);
 
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
