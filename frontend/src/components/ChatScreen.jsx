@@ -169,6 +169,7 @@ const ChatScreen = () => {
   const handleSelectContact = (contactEmail) => {
     console.log('Contact selected:', contactEmail); // Debug log
     setSelectedContact(contactEmail);
+    console.log('Contact selected after setSelectedContact:', contactEmail); // Debug log
     fetchMessages(contactEmail);
   };
 
