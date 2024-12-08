@@ -107,7 +107,7 @@
 
 .profile-name {
     font-size: 8px;
-    font-weight: bold;
+    /* font-weight: bold; */
     color:#333;
 }
 
