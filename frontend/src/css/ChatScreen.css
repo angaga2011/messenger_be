@@ -108,7 +108,7 @@
 .profile-name {
     font-size: 8px;
     color:#333;
-    font-weight: normal;
+    font-weight: normal !important;
 }
 
 .settings-button {
