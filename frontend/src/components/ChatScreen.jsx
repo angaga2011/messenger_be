@@ -218,7 +218,7 @@ const ChatScreen = () => {
               className="profile-picture"
             /> */}
             
-            <p className="profile-name">${userEmail}</p>
+            <p className="profile-name">{userEmail}</p>
           </div>
           <button onClick={handleLogout} className="logout-button">
           Logout 🔐 
