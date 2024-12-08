@@ -19,7 +19,9 @@ const ChatScreen = () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/contacts/get-user-contacts`,
-          { withCredentials: true }
+          { withCredentials: true,
+            cookie: document.cookie
+           }
         );
 
         if (response.status === 200) {
