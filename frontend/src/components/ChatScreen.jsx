@@ -172,7 +172,7 @@ const ChatScreen = () => {
     const newMessage = {
       id: Date.now(),
       text: input,
-      sender: "userEmail",
+      sender: userEmail,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
@@ -241,8 +241,8 @@ const ChatScreen = () => {
             key={message.id}
             className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
             >
-              <p className="message-text">{message.text}</p>
-              <p className="message-timestamp">{message.timestamp}</p>
+              <p className="message-text">{message.content}</p>
+              <p className="message-timestamp">{new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
             </div>
           ))}
         </div>
