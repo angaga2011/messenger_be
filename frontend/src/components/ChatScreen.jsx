@@ -166,9 +166,9 @@ const ChatScreen = () => {
     navigate("/signup");
   };
 
-  const handleSelectContact = (contact) => {
-    setSelectedContact(contact);
-    fetchMessages(contact); // Fetch messages for the selected contact
+  const handleSelectContact = (contactEmail) => {
+    setSelectedContact(contactEmail);
+    fetchMessages(contactEmail); // Fetch messages for the selected contact
   };
 
   const handleSendMessage = () => {
