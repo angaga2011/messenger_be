@@ -50,6 +50,7 @@ const ChatScreen = () => {
 
   // Fetch messages from the backend
   const fetchMessages = async (contactEmail) => {
+    setMessages([]); // Clear messages before fetching new ones
     try {
       const response = await fetch(
         `https://my-messenger-backend.onrender.com/api/messages/get-user-messages?contactEmail=${contactEmail}`,
