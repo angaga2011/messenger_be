@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
 
 const ChatScreen = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const userEmail = location.state?.email; // Get the email from location state
+  const userEmail = localStorage.getItem("userEmail"); // Get the email from local storage
 
   // Declare JWT token at the top
   const jwt = localStorage.getItem("token");
@@ -158,6 +157,7 @@ const ChatScreen = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userEmail");
     navigate("/signup");
   };
 

@@ -23,11 +23,12 @@ const LogIn = () => {
             
             console.log("Server Response:", res.data);
 
-            // Save the token in localStorage
+            // Save the token and email in localStorage
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("userEmail", formData.email);
 
-            // Navigate to the chat screen and pass the email as state
-            navigate("/chat", { state: { email: formData.email } });
+            // Navigate to the chat screen
+            navigate("/chat");
             
         } catch (err) {
             // Display error message from server or fallback to "Login failed"
