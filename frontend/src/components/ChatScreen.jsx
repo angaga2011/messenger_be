@@ -87,7 +87,7 @@ const ChatScreen = () => {
 
     newSocket.on('receive_message', (message) => {
       console.log('Message received:', message);
-      if(selectedContact === message.sender || selectedContact === message.receiver){
+      if(selectedContact === message.sender || selectedContact === null){
         setMessages((prevMessages) => [...prevMessages, message]);
       }
     });
