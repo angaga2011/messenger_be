@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
@@ -49,7 +49,7 @@ const ChatScreen = () => {
   }, [jwt]);
 
   // Fetch messages from the backend
-  const fetchMessages = async (contactEmail) => {
+  const fetchMessages = useCallback(async (contactEmail) => {
     setMessages([]); // Clear messages before fetching new ones
     try {
       const response = await fetch(
@@ -75,7 +75,7 @@ const ChatScreen = () => {
     } catch (err) {
       console.error("Error fetching messages:", err);
     }
-  };
+  }, [jwt]);
 
   useEffect(() => {
     const newSocket = io('https://my-messenger-backend.onrender.com');
@@ -88,7 +88,6 @@ const ChatScreen = () => {
 
     newSocket.on('receive_message', (message) => {
       console.log('Message received:', message, 'Selected contact:', selectedContact);
-      console.log('Selected contact:', selectedContact);
       if(selectedContact === message.sender){
         setMessages((prevMessages) => [...prevMessages, message]);
       }
@@ -107,7 +106,7 @@ const ChatScreen = () => {
     return () => {
       newSocket.disconnect();
     };
-  }, [userEmail]);
+  }, [userEmail, selectedContact]);
 
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
@@ -166,18 +165,17 @@ const ChatScreen = () => {
     navigate("/signup");
   };
 
-  const handleSelectContact = (contactEmail) => {
+  const handleSelectContact = useCallback((contactEmail) => {
     console.log('Contact selected:', contactEmail); // Debug log
     setSelectedContact(contactEmail);
-    console.log('Contact selected after setSelectedContact:', selectedContact); // Debug log
     fetchMessages(contactEmail);
-  };
+  }, [fetchMessages]);
 
   useEffect(() => {
     console.log('Selected contact updated:', selectedContact); // Debug log
   }, [selectedContact]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = useCallback(() => {
     if (!socket || input.trim() === "" || !selectedContact) return;
 
     const newMessage = {
@@ -193,16 +191,19 @@ const ChatScreen = () => {
     };
 
     socket.emit('send_message', messageData);
-    setMessages([...messages, newMessage]);
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInput("");
-  };
+  }, [socket, input, selectedContact, userEmail, jwt]);
+
+  const memoizedContacts = useMemo(() => contacts, [contacts]);
+  const memoizedMessages = useMemo(() => messages, [messages]);
 
   return (
     <div className="chat-screen">
       {/* Contact List Section */}
       <div className="contacts-section">
         <div className="contact-list">
-          {contacts.map((email, index) => (
+          {memoizedContacts.map((email, index) => (
             <div
               key={index}
               className={`contact-item ${selectedContact === email ? "selected" : ""}`}
@@ -247,7 +248,7 @@ const ChatScreen = () => {
           </p>
         </div>
         <div className="chat-messages">
-          {messages.map((message) => (
+          {memoizedMessages.map((message) => (
             <div
             key={message.id}
             className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
