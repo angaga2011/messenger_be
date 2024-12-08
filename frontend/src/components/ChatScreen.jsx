@@ -212,11 +212,11 @@ const ChatScreen = () => {
         {/* Profile Section */}
         <div className="profile-section">
           <div className="profile">
-            <img
+            {/* <img
               src="https://via.placeholder.com/40"
               alt="Your Profile"
               className="profile-picture"
-            />
+            /> */}
             <p className="profile-name">Joe Biden</p>
           </div>
           <button onClick={handleLogout} className="logout-button">
