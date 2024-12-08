@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
 import "../css/ChatScreen.css";
 import axios from 'axios';
+import ContactList from './ContactList'; // Import the ContactList component
+import ChatSection from './ChatSection'; // Import the ChatSection component
+import ProfileSection from './ProfileSection'; // Import the ProfileSection component
 
 const ChatScreen = () => {
   const navigate = useNavigate();
@@ -39,19 +42,24 @@ const ChatScreen = () => {
     fetchContacts();
   }, []);
 
-  // Fetch messages from the backend
-  const fetchMessages = async (contactEmail) => {
+  const handleSelectContact = (contact) => {
+    setSelectedContact(contact);
+    // Fetch messages for the selected contact
+    fetchMessages(contact);
+  };
+
+  const fetchMessages = async (contact) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/messages/get-user-messages?contactEmail=${contactEmail}`,
-        { withCredentials: true }
+        `${import.meta.env.VITE_API_URL}/api/messages/get-messages`,
+        { params: { contact }, withCredentials: true }
       );
 
       if (response.status === 200) {
         const data = response.data;
         console.log("Fetched messages:", data.messages); // Debug log
 
-        // Set messages directly as an array of messages
+        // Set messages state
         setMessages(data.messages);
       } else {
         console.error("Failed to fetch messages:", response.data.message);
@@ -61,173 +69,83 @@ const ChatScreen = () => {
     }
   };
 
-  useEffect(() => {
-    const newSocket = io(`${import.meta.env.VITE_API_URL}`);
-    setSocket(newSocket);
-
-    newSocket.on('connect', () => {
-      console.log('Connected to socket server:', newSocket.id);
-    });
-
-    newSocket.on('receive_message', (message) => {
-      console.log('Message received:', message);
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
-    newSocket.on('message_saved', (data) => {
-      if (data.success) {
-        console.log('Message saved successfully');
-      }
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('Disconnected from socket server');
-    });
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
-
-  const handleAddContact = async () => {
-    const newContactEmail = prompt("Enter the email of the new contact:");
-    if (!newContactEmail) return;
-  
-    // Check if the contact is already in the list before making the API call
-    const isContactAlreadyAdded = contacts.includes(newContactEmail);
-    if (isContactAlreadyAdded) {
-      alert("Contact already added.");
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/contacts/addContact`,
-        { contacts: [newContactEmail] },
-        { withCredentials: true }
-      );
-
-      if (response.status === 200) {
-        const responseData = response.data;
-        console.log("Response from server:", responseData);
-
-        // Update the state with the new contact
-        setContacts((prevContacts) => [...prevContacts, newContactEmail]);
-          
-        alert("Contact added successfully!");
-      } else {
-        alert(`Failed to add contact: ${response.data.message}`);
-      }
-    } catch (err) {
-      console.error("Error adding contact:", err);
-      alert("An error occurred while adding the contact.");
+  const handleAddContact = () => {
+    const newContact = prompt("Enter the email of the new contact:");
+    if (newContact) {
+      // Assuming you have an API endpoint to add a new contact
+      axios.post(`${import.meta.env.VITE_API_URL}/api/contacts/add`, { email: newContact }, { withCredentials: true })
+        .then(response => {
+          if (response.status === 200) {
+            // Update the contacts state with the new contact
+            setContacts(prevContacts => [...prevContacts, newContact]);
+            console.log("Contact added successfully:", newContact);
+          } else {
+            console.error("Failed to add contact:", response.data.message);
+          }
+        })
+        .catch(err => {
+          console.error("Error adding contact:", err);
+        });
     }
   };
 
   const handleLogout = () => {
-    // Clear the cookie by setting it to expire immediately
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    navigate("/signup");
-  };
-
-  const handleSelectContact = (contact) => {
-    setSelectedContact(contact);
-    fetchMessages(contact); // Fetch messages for the selected contact
+    axios.post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, { withCredentials: true })
+      .then(response => {
+        if (response.status === 200) {
+          navigate("/login");
+        } else {
+          console.error("Failed to logout:", response.data.message);
+        }
+      })
+      .catch(err => {
+        console.error("Error logging out:", err);
+      });
   };
 
   const handleSendMessage = () => {
-    if (!socket || input.trim() === "" || !selectedContact) return;
+    if (input.trim() === "") return;
 
     const newMessage = {
-      id: Date.now(),
       text: input,
       sender: "You",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: new Date().toLocaleTimeString(),
     };
 
-    const messageData = {
-      receiver: selectedContact,
-      content: input,
-    };
-
-    socket.emit('send_message', messageData);
-    setMessages([...messages, newMessage]);
-    setInput("");
+    // Assuming you have an API endpoint to send a message
+    axios.post(`${import.meta.env.VITE_API_URL}/api/messages/send`, { message: newMessage, contact: selectedContact }, { withCredentials: true })
+      .then(response => {
+        if (response.status === 200) {
+          setMessages(prevMessages => [...prevMessages, newMessage]);
+          setInput("");
+        } else {
+          console.error("Failed to send message:", response.data.message);
+        }
+      })
+      .catch(err => {
+        console.error("Error sending message:", err);
+      });
   };
 
   return (
     <div className="chat-screen">
-      {/* Contact List Section */}
-      <div className="contacts-section">
-        <div className="contact-list">
-          {contacts.map((email, index) => (
-            <div
-              key={index}
-              className={`contact-item ${selectedContact === email ? "selected" : ""}`}
-              onClick={() => handleSelectContact(email)}
-            >
-              <div className="contact-info">
-                <p className="contact-name">{email}</p> {/* Render email directly */}
-                <p className="contact-status">Offline</p>
-              </div>
-            </div>
-          ))}
-          {/* Add Contact Button */}
-          <button className="add-contact-button" onClick={handleAddContact}>
-            ➕ Add Contact
-          </button>
-        </div>
-        {/* Profile Section */}
-        <div className="profile-section">
-          <div className="profile">
-            <img
-              src="https://via.placeholder.com/40"
-              alt="Your Profile"
-              className="profile-picture"
-            />
-            <p className="profile-name">Joe Biden</p>
-          </div>
-          <button onClick={handleLogout} className="logout-button">
-          Logout 🔐 
-        </button>
-          <button className="settings-button" onClick={() => navigate("/settings")}>
-            ⚙️
-          </button>
-        </div>
-      </div>
-
-      {/* Chat Section */}
-      <div className="chat-section">
-        <div className="chat-header">
-          <p className="chat-contact-name">
-            {selectedContact || "Select a contact"}
-          </p>
-        </div>
-        <div className="chat-messages">
-          {messages.map((message) => (
-            <div
-            key={message.id}
-            className={`chat-message ${message.sender === "You" ? "sent" : "received"}`}
-            >
-              <p className="message-text">{message.text}</p>
-              <p className="message-timestamp">{message.timestamp}</p>
-            </div>
-          ))}
-        </div>
-        <div className="chat-input-container">
-          <input
-            type="text"
-            placeholder="Type a message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-            className="chat-input"
-          />
-          <button onClick={handleSendMessage} className="send-button">
-            ➤
-          </button>
-        </div>
-      </div>
+      <ContactList
+        contacts={contacts}
+        onSelectContact={handleSelectContact}
+        selectedContact={selectedContact}
+        handleAddContact={handleAddContact}
+      />
+      <ProfileSection
+        handleLogout={handleLogout}
+        navigate={navigate}
+      />
+      <ChatSection
+        selectedContact={selectedContact}
+        messages={messages}
+        input={input}
+        setInput={setInput}
+        handleSendMessage={handleSendMessage}
+      />
     </div>
   );
 };
