@@ -40,7 +40,6 @@ const ChatScreen = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Fetched contacts:", data.contacts); // Debug log
 
           // Set contacts directly as an array of emails
           setContacts(data.contacts);
@@ -72,7 +71,6 @@ const ChatScreen = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Fetched messages:", data.messages); // Debug log
 
         // Set messages directly as an array of messages
         setMessages(data.messages);
@@ -85,30 +83,19 @@ const ChatScreen = () => {
     }
   }, [jwt]);
 
+  // Connect to the socket server
   useEffect(() => {
     const newSocket = io('https://my-messenger-backend.onrender.com');
     setSocket(newSocket);
 
     newSocket.on('connect', () => {
-      console.log('Connected to socket server:', newSocket.id);
       newSocket.emit('register_email', { email: userEmail });
     });
 
     newSocket.on('receive_message', (message) => {
-      console.log('Message received:', message, 'Selected contact:', selectedContact);
       if(selectedContact === message.sender){
         setMessages((prevMessages) => [...prevMessages, message]);
       }
-    });
-
-    newSocket.on('message_saved', (data) => {
-      if (data.success) {
-        console.log('Message saved successfully');
-      }
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('Disconnected from socket server');
     });
 
     return () => {
@@ -116,10 +103,12 @@ const ChatScreen = () => {
     };
   }, [userEmail, selectedContact]);
 
+  // Scroll to the bottom of the chat when messages change
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
+  // Function to add a new contact
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
@@ -154,7 +143,6 @@ const ChatScreen = () => {
   
       if (response.ok) {
         const responseData = await response.json();
-        console.log("Response from server:", responseData);
   
         // Update the state with the new contact
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
@@ -171,22 +159,20 @@ const ChatScreen = () => {
     }
   };
 
+  // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
     navigate("/signup");
   };
 
+  // Function to handle selecting a contact
   const handleSelectContact = useCallback((contactEmail) => {
-    console.log('Contact selected:', contactEmail); // Debug log
     setSelectedContact(contactEmail);
     fetchMessages(contactEmail);
   }, [fetchMessages]);
 
-  useEffect(() => {
-    console.log('Selected contact updated:', selectedContact); // Debug log
-  }, [selectedContact]);
-
+  // Function to handle sending a message
   const handleSendMessage = useCallback(() => {
     if (!socket || input.trim() === "" || !selectedContact) return;
 
@@ -207,6 +193,7 @@ const ChatScreen = () => {
     setInput("");
   }, [socket, input, selectedContact, userEmail, jwt]);
 
+  // Memoize the contacts and messages to prevent unnecessary re-renders
   const memoizedContacts = useMemo(() => contacts, [contacts]);
   const memoizedMessages = useMemo(() => messages, [messages]);
 
