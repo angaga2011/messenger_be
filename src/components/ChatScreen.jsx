@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import io from 'socket.io-client';
-import "../css/ChatScreen.css";
+import "../styles/ChatScreen.css";
 
 const ChatScreen = () => {
   const navigate = useNavigate();
