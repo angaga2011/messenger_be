@@ -4,6 +4,7 @@ import LogIn from "./components/Log_In";
 import SignUp from "./components/SignUp";
 import ChatScreen from "./components/ChatScreen";
 import Settings from "./components/Settings";
+import "./styles/GeneralStyles.css"; // Import the general styles
 
 // import ProtectedRoute from "./components/ProtectedRoute";
 
