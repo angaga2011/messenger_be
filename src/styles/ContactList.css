@@ -1,7 +1,6 @@
 .contact-list {
     flex: 1;
     padding: 10px;
-    overflow-x: hidden; 
     overflow-y: auto;
 }
 
