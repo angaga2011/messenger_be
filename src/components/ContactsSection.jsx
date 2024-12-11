@@ -17,6 +17,11 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
     <button className="add-contact-button" onClick={onAddContact}>
       ➕ Add Contact
     </button>
+    <button className="add-contact-button" onClick={onAddContact}>
+      ➕ Add Contact
+    </button><button className="add-contact-button" onClick={onAddContact}>
+      ➕ Add Contact
+    </button>
   </div>
 );
 

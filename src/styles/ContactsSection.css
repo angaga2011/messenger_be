@@ -32,6 +32,8 @@
     background-color: #0056b3; /* Darker blue on hover */
     color: white;
     transform: scale(1.02); /* Slight zoom effect */
+    border-radius: 8px;
+
 }
 
 .contact-item.selected {
