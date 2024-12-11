@@ -69,16 +69,15 @@
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #000000; /* Adjust the color as needed */
+    color: #000000; 
     text-align: center;
   }
 
 .no-contact-selected {
-    /* justify-content: center; */
     text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
-    font-size: 24px;
+    font-size: 16px;
     color: #000000;
 }
 
