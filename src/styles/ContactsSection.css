@@ -49,18 +49,23 @@
 /* Add Contact Button */
 .add-contact-button {
     padding: 15px;
+    width: 49%;
+
     margin-top: 20px;
+    margin-right: 5px;
     border: none;
-    background-color: #ff6347; /* Vibrant red-orange for button */
+    background-color: #000000; /* Vibrant red-orange for button */
     color: white;
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: inline-block;
+
 }
 
 .add-contact-button:hover {
-    background-color: #d9534f; /* Slightly darker red-orange */
+    background-color: #48ff00; /* Slightly darker red-orange */
 }
 
 .settings-button {
@@ -99,10 +104,29 @@
 }
 
 .logout-button:hover {
-    background-color: #d9534f; /* Slightly darker red-orange */
+    background-color: #1c1c1c; /* Slightly darker red-orange */
 }
 
 .settings-logout-div {
 
-    border-bottom: 1px solid #ff0000; /* Red separator line */
+    border-bottom: 1px solid #1c1c1c; /* Red separator line */
 }
+
+.delete-contact-button {
+    padding: 15px;
+    width: 49%;
+    margin-top: 20px;
+    border: none;
+    background-color: #000000; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+
+  }
+  
+  .delete-contact-button:hover {
+    background-color: #ff0000; /* Adjust the hover color as needed */
+  }
