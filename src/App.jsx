@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Routes, Route, Navigate } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import LogIn from './components/Log_In';
 import ChatScreen from './components/ChatScreen';
