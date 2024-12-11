@@ -1,6 +1,7 @@
 .message {
     margin-bottom: 10px;
-    max-width: 70%;
+    /* max-width: 70%; */
+    width: 10%;
 }
 
 .sent {
@@ -31,5 +32,5 @@
 
 .message-timestamp {
     font-size: 12px;
-    color: #888;
+    color: black;
 }
