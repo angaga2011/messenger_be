@@ -22,11 +22,16 @@
 }
 
 /* Contact List */
-/* .contact-list {
+.contact-list {
     flex: 1;
-    overflow: hidden;
-    margin-top: 20px;
-} */
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* margin-top: 20px; */
+}
+
+.contact-list::-webkit-scrollbar {
+    display: none;
+}
 
 .contact-item:hover {
     background-color: #0056b3; /* Darker blue on hover */
