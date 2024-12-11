@@ -1,6 +1,16 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 /* Log In Container */
 .login-container {
-    margin-top:12%;
     display: flex;
     justify-content: center;
     align-items: center;

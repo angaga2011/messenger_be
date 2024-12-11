@@ -4,7 +4,6 @@ import LogIn from "./components/Log_In";
 import SignUp from "./components/SignUp";
 import ChatScreen from "./components/ChatScreen";
 import Settings from "./components/Settings";
-import "./styles/GeneralStyles.css"; // Import the general styles
 
 // import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -49,7 +48,6 @@ const App = () => {
     }
 
     return (
-        <div className="App">
         <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
@@ -68,7 +66,6 @@ const App = () => {
                 }
             />
         </Routes>
-        </div>
     );
 };
 

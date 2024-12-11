@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
-import "../styles/Settings.css";
+import "../css/Settings.css";
 
 const Settings = () => {
   const [isOnline, setIsOnline] = useState(false);
