@@ -1,8 +1,14 @@
 .contact-list {
     flex: 1;
-    overflow-y: auto;
     padding: 10px;
+    overflow-x: hidden; 
+    overflow-y: auto;
 }
+
+.contact-list::-webkit-scrollbar {
+    display: none;
+}
+
 
 .contact-item {
     padding: 15px;
