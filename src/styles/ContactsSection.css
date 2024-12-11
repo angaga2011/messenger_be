@@ -73,7 +73,8 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    float: left;
+
+    display: inline-block;
 }
 
 .settings-button:hover {
@@ -90,13 +91,15 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+
+    display: inline-block;
 }
 
 .logout-button:hover {
     background-color: #d9534f; /* Slightly darker red-orange */
 }
 
-.separator {
-    margin: 20px 0;
-    border-bottom: 1px solid #ffffff; /* White separator line */
+.settings-logout-div {
+
+    border-bottom: 1px solid #ff0000; /* Red separator line */
 }
