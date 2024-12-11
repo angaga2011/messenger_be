@@ -19,15 +19,15 @@ const ChatScreen = () => {
   // Create a ref for the chat messages container
   const messagesEndRef = useRef(null);
 
-  // Function to scroll to the bottom of the chat
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // // Function to scroll to the bottom of the chat
+  // const scrollToBottom = () => {
+  //   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // };
 
-  // Scroll to the bottom of the chat when messages change
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // // Scroll to the bottom of the chat when messages change
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [messages]);
 
   // Fetch contacts from the backend
   useEffect(() => {
@@ -226,17 +226,6 @@ const ChatScreen = () => {
         userEmail={userEmail}
         messagesEndRef={messagesEndRef}
       />
-      {/* <div className="profile-section">
-        <div className="profile">
-          <p className="profile-name">{userEmail}</p>
-        </div>
-        <button onClick={handleLogout} className="logout-button">
-          Logout 🔐 
-        </button>
-        <button className="settings-button" onClick={() => navigate("/settings")}>
-          ⚙️
-        </button>
-      </div> */}
     </div>
   );
 };
