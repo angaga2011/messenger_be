@@ -17,10 +17,10 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
     </div>
     <div classname="settings-logout-div">
     <button className="add-contact-button" onClick={onAddContact}>
-      ➕ Add Contact
+      ➕
     </button>
     <button className="delete-contact-button" onClick={() => onDeleteContact(selectedContact)}>
-      🗑️ Delete Contact
+      🗑️
     </button>
     </div>
     <div classname="settings-logout-div">
