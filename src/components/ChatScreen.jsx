@@ -26,6 +26,11 @@ const ChatScreen = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Scroll to the bottom of the chat when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   // Fetch contacts from the backend
   useEffect(() => {
     const fetchContacts = async () => {
@@ -198,7 +203,7 @@ const ChatScreen = () => {
   // Memoize the contacts and messages to prevent unnecessary re-renders
   const memoizedContacts = useMemo(() => contacts, [contacts]);
   const memoizedMessages = useMemo(() => messages, [messages]);
-
+  
   return (
     <div className="chat-screen">
       <ContactsSection
