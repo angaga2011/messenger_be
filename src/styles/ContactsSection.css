@@ -85,7 +85,7 @@
 }
 
 .settings-button:hover {
-    background-color: #d9534f; /* Slightly darker red-orange */
+    background-color: #3c3c3c; /* Slightly darker red-orange */
 }
 
 .logout-button {
@@ -104,7 +104,7 @@
 }
 
 .logout-button:hover {
-    background-color: #1c1c1c; /* Slightly darker red-orange */
+    background-color: #d9ff00; /* Slightly darker red-orange */
 }
 
 .settings-logout-div {
