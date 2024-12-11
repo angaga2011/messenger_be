@@ -209,6 +209,8 @@ const ChatScreen = () => {
         selectedContact={selectedContact}
         onSelectContact={handleSelectContact}
         onAddContact={handleAddContact}
+        handleLogout={handleLogout}
+
       />
       <ChatSection
         selectedContact={selectedContact}
