@@ -23,7 +23,6 @@
     flex: 1;
     overflow-y: auto; /* Scrollable messages */
     overflow-x: hidden; 
-    margin-top: 20px;
     background-color: #f9f9f9; /* Light gray for messages area */
     padding: 15px;
     border-radius: 8px;
