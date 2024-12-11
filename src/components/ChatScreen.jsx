@@ -7,9 +7,7 @@ import ChatSection from "./ChatSection";
 
 const ChatScreen = () => {
   const navigate = useNavigate();
-  const userEmail = localStorage.getItem("userEmail"); // Get the email from local storage
-
-  // Declare JWT token at the top
+  const userEmail = localStorage.getItem("userEmail");
   const jwt = localStorage.getItem("token");
 
   const [contacts, setContacts] = useState([]); // Contacts state
@@ -25,6 +23,11 @@ const ChatScreen = () => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  // Scroll to the bottom of the chat when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   // Fetch contacts from the backend
   useEffect(() => {
@@ -198,7 +201,7 @@ const ChatScreen = () => {
   // Memoize the contacts and messages to prevent unnecessary re-renders
   const memoizedContacts = useMemo(() => contacts, [contacts]);
   const memoizedMessages = useMemo(() => messages, [messages]);
-
+  
   return (
     <div className="chat-screen">
       <ContactsSection

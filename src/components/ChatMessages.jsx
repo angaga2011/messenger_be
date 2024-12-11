@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const ChatMessages = ({ messages }) => {
+const ChatMessages = ({ messages, messagesEndRef }) => {
   const userEmail = localStorage.getItem("userEmail");
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="chat-messages">
@@ -16,6 +20,7 @@ const ChatMessages = ({ messages }) => {
           </p>
         </div>
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
