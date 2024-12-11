@@ -46,7 +46,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <Router>
         <Routes>
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<LogIn />} />
@@ -58,12 +57,11 @@ const App = () => {
               isAuthenticated ? (
                 <Navigate to="/chat" replace />
               ) : (
-                <Navigate to="/signup" replace />
+                <Navigate to="/login" replace />
               )
             }
           />
         </Routes>
-      </Router>
     </div>
   );
 };
