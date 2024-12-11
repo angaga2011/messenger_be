@@ -20,7 +20,7 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
       ➕ Add Contact
     </button>
     <div classname="separator">
-    <button className="settings-button" onClick={() => navigate("/settings")}>
+    <button className="settings-button" onClick={handleNavigateToSettings}>
       ⚙️
     </button>
     <button className="logout-button" onClick={handleLogout}>
