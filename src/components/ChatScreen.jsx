@@ -37,34 +37,36 @@ const ChatScreen = () => {
   }, [jwt, navigate]);
 
   // Fetch contacts from the backend
-  useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const response = await fetch(
-          "https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${jwt}`
-            },
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-
-          // Set contacts directly as an array of emails
-          setContacts(data.contacts);
-        } else {
-          const error = await response.json();
-          console.error("Failed to fetch contacts:", error.message);
+  const fetchContacts = async () => {
+    try {
+      const response = await fetch(
+        "https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          },
         }
-      } catch (err) {
-        console.error("Error fetching contacts:", err);
-      }
-    };
+      );
 
+      if (response.ok) {
+        const data = await response.json();
+        setContacts(data.contacts);
+      } else {
+        const error = await response.json();
+        console.error("Failed to fetch contacts:", error.message);
+      }
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+    }
+  };
+
+  // Auto-update contacts at a regular interval
+  useEffect(() => {
     fetchContacts();
+    const intervalId = setInterval(fetchContacts, 10000); // Fetch contacts every 60 seconds
+
+    return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [jwt]);
 
   // Fetch messages from the backend
@@ -83,8 +85,6 @@ const ChatScreen = () => {
 
       if (response.ok) {
         const data = await response.json();
-
-        // Set messages directly as an array of messages
         setMessages(data.messages);
       } else {
         const error = await response.json();
@@ -133,35 +133,30 @@ const ChatScreen = () => {
     }
 
     try {
-
       if (!jwt) {
         alert("You are not logged in. Please log in first.");
         return;
       }
-  
+
       const response = await fetch(
         "https://my-messenger-backend.onrender.com/api/contacts/addContact",
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json", // Ensure JSON content is specified
-            Authorization: `Bearer ${jwt}`, // Include the JWT
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
           },
           body: JSON.stringify({
-            contacts: [newContactEmail], // Send the new contact as an array
+            contacts: [newContactEmail],
           }),
         }
       );
   
       if (response.ok) {
         const responseData = await response.json();
-  
-        // Update the state with the new contact
         setContacts((prevContacts) => [...prevContacts, newContactEmail]);
-          
         alert("Contact added successfully!");
       } else {
-        // Handle response errors
         const error = await response.json();
         alert(`Failed to add contact: ${error.message}`);
       }
@@ -206,7 +201,7 @@ const ChatScreen = () => {
     const newMessage = {
       content: input,
       sender: userEmail,
-      createdAt: new Date(), // Store the Date object directly
+      createdAt: new Date(),
     };
 
     const messageData = {
