@@ -7,9 +7,7 @@ import ChatSection from "./ChatSection";
 
 const ChatScreen = () => {
   const navigate = useNavigate();
-  const userEmail = localStorage.getItem("userEmail"); // Get the email from local storage
-
-  // Declare JWT token at the top
+  const userEmail = localStorage.getItem("userEmail");
   const jwt = localStorage.getItem("token");
 
   const [contacts, setContacts] = useState([]); // Contacts state

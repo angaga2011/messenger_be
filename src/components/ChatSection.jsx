@@ -3,11 +3,11 @@ import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
 import "../styles/ChatSection.css";
 
-const ChatSection = ({ selectedContact, messages, input, setInput, onSendMessage }) => (
+const ChatSection = ({ selectedContact, messages, input, setInput, onSendMessage, messagesEndRef }) => (
   <div className="chat-section">
     {selectedContact ? (
       <>
-        <ChatMessages messages={messages} />
+        <ChatMessages messages={messages} messagesEndRef={messagesEndRef} />
         <ChatInput input={input} setInput={setInput} onSendMessage={onSendMessage} />
       </>
     ) : (
