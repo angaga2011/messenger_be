@@ -1,8 +1,14 @@
 .contact-list {
     flex: 1;
-    overflow-y: auto;
     padding: 10px;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
 }
+/* 
+.contact-list::-webkit-scrollbar {
+    display: none;
+} */
+
 
 .contact-item {
     padding: 15px;
@@ -14,6 +20,8 @@
 
 .contact-item.selected {
     background-color: #ddd;
+    border-radius: 8px;
+
 }
 
 .status.online {
