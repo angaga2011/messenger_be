@@ -1,0 +1,13 @@
+<svg
+  width="64"
+  height="64"
+  viewBox="0 0 64 64"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Speech bubble -->
+  <path
+    d="M12 10h40c2.21 0 4 1.79 4 4v26c0 2.21-1.79 4-4 4H24l-8 8v-8H12c-2.21 0-4-1.79-4-4V14c0-2.21 1.79-4 4-4z"
+    fill="#008C9E"
+  />
+</svg>
