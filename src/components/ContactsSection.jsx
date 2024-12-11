@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ContactItem from "./ContactItem";
 import "../styles/ContactsSection.css";
+const navigate = useNavigate();
 
-const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddContact }) => (
+const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddContact, handleLogout }) => (
   <div className="contacts-section">
     <div className="contact-list">
       {contacts.map((email, index) => (
