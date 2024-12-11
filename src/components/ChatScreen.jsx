@@ -170,7 +170,7 @@ const ChatScreen = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
-    navigate("/signup");
+    navigate("/login");
   };
 
   // Function to navigate to settings
