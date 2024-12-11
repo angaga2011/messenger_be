@@ -37,7 +37,7 @@
     background-color: #0056b3; /* Darker blue on hover */
     color: white;
     transform: scale(1.02); /* Slight zoom effect */
-    border-radius: 8px;
+    border-radius: 18px;
 
 }
 
@@ -64,8 +64,10 @@
 }
 
 .settings-button {
+    width: 50%;
     padding: 15px;
     margin-top: 20px;
+    margin-right: 5px;
     border: none;
     background-color: #000000; /* Vibrant red-orange for button */
     color: white;
@@ -82,6 +84,7 @@
 }
 
 .logout-button {
+    width: 50%;
     padding: 15px;
     margin-top: 20px;
     border: none;
