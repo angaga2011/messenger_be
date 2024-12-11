@@ -29,6 +29,13 @@ const ChatScreen = () => {
     scrollToBottom();
   }, [messages]);
 
+  // Redirect to login if not logged in
+  useEffect(() => {
+    if (!jwt) {
+      navigate("/login");
+    }
+  }, [jwt, navigate]);
+
   // Fetch contacts from the backend
   useEffect(() => {
     const fetchContacts = async () => {
