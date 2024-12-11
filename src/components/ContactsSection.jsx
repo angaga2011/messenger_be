@@ -17,11 +17,14 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
     <button className="add-contact-button" onClick={onAddContact}>
       ➕ Add Contact
     </button>
-    <button className="add-contact-button" onClick={onAddContact}>
-      ➕ Add Contact
-    </button><button className="add-contact-button" onClick={onAddContact}>
-      ➕ Add Contact
+    <div classname="separator">
+    <button className="settings-button" onClick={() => navigate("/settings")}>
+      ⚙️
     </button>
+    <button className="logout-button" onClick={handleLogout}>
+      🔐
+    </button>
+</div>
   </div>
 );
 

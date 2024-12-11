@@ -63,3 +63,40 @@
     background-color: #d9534f; /* Slightly darker red-orange */
 }
 
+.settings-button {
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    background-color: #000000; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    float: left;
+}
+
+.settings-button:hover {
+    background-color: #d9534f; /* Slightly darker red-orange */
+}
+
+.logout-button {
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    background-color: #000000; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #d9534f; /* Slightly darker red-orange */
+}
+
+.separator {
+    margin: 20px 0;
+    border-bottom: 1px solid #ffffff; /* White separator line */
+}
