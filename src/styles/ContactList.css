@@ -1,13 +1,13 @@
 .contact-list {
     flex: 1;
     padding: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    /* overflow-y: auto;
+    overflow-x: hidden; */
 }
-
+/* 
 .contact-list::-webkit-scrollbar {
     display: none;
-}
+} */
 
 
 .contact-item {
