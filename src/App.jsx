@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import SignUp from './components/SignUp';
-import LogIn from './components/Log_In';
+import LogIn from './components/LogIn';
 import ChatScreen from './components/ChatScreen';
 import Settings from './components/Settings';
 import "./styles/GeneralStyles.css"; // Import the general styles
