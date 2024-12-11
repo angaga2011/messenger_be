@@ -182,6 +182,16 @@ const ChatScreen = () => {
   const handleNavigateToSettings = () => {
     navigate("/settings");
   };
+
+
+ //not fully implemented function 
+  const onDeleteContact = (email) => {
+    if (email) {
+      // Logic to delete the contact
+      setContacts(contacts.filter(contact => contact !== email));
+      setSelectedContact(null); // Clear the selected contact
+    }
+  };
   
   // Function to handle selecting a contact
   const handleSelectContact = useCallback((contactEmail) => {
@@ -223,6 +233,7 @@ const ChatScreen = () => {
         onAddContact={handleAddContact}
         handleLogout={handleLogout}
         handleNavigateToSettings={handleNavigateToSettings}
+        onDeleteContact={onDeleteContact}
       />
       <ChatSection
         selectedContact={selectedContact}

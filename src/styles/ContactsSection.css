@@ -49,7 +49,10 @@
 /* Add Contact Button */
 .add-contact-button {
     padding: 15px;
+    width: 49%;
+
     margin-top: 20px;
+    margin-right: 5px;
     border: none;
     background-color: #ff6347; /* Vibrant red-orange for button */
     color: white;
@@ -57,6 +60,8 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: inline-block;
+
 }
 
 .add-contact-button:hover {
@@ -106,3 +111,22 @@
 
     border-bottom: 1px solid #ff0000; /* Red separator line */
 }
+
+.delete-contact-button {
+    padding: 15px;
+    width: 49%;
+    margin-top: 20px;
+    border: none;
+    background-color: #ff6347; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+
+  }
+  
+  .delete-contact-button:hover {
+    background-color: #ff1a1a; /* Adjust the hover color as needed */
+  }
