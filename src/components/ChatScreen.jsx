@@ -171,6 +171,11 @@ const ChatScreen = () => {
     navigate("/signup");
   };
 
+  // Function to navigate to settings
+  const handleNavigateToSettings = () => {
+    navigate("/settings");
+  };
+  
   // Function to handle selecting a contact
   const handleSelectContact = useCallback((contactEmail) => {
     setSelectedContact(contactEmail);
@@ -210,7 +215,7 @@ const ChatScreen = () => {
         onSelectContact={handleSelectContact}
         onAddContact={handleAddContact}
         handleLogout={handleLogout}
-
+        handleNavigateToSettings={handleNavigateToSettings}
       />
       <ChatSection
         selectedContact={selectedContact}
