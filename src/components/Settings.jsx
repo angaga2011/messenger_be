@@ -40,8 +40,14 @@ const Settings = () => {
         localStorage.removeItem("userEmail");
         navigate("/signup");
       } else {
-        const error = await response.json();
-        alert(`Failed to delete account: ${error.message}`);
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          const error = await response.json();
+          alert(`Failed to delete account: ${error.message}`);
+        } else {
+          const errorText = await response.text();
+          alert(`Failed to delete account: ${errorText}`);
+        }
       }
     } catch (err) {
       console.error("Error deleting account:", err);
