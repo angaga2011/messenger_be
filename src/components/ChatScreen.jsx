@@ -79,7 +79,7 @@ const ChatScreen = () => {
   // Auto-update contacts at a regular interval
   useEffect(() => {
     fetchContacts();
-    const intervalId = setInterval(fetchContacts, 10000); // Fetch contacts every 60 seconds
+    const intervalId = setInterval(fetchContacts, 1000);
 
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [jwt]);
