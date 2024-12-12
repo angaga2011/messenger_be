@@ -10,7 +10,7 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
         <ContactItem
           key={index}
           email={contact.email}
-          username={contact.username}
+          // username={contact.username}
           isSelected={selectedContact === contact.email}
           onSelect={() => onSelectContact(contact.email)}
         />
