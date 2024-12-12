@@ -1,48 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
 import "../styles/Settings.css";
 
 const Settings = () => {
-  const [user, setUser] = useState({ username: "", email: "" });
-  const [preferences, setPreferences] = useState([]);
+  const [isOnline, setIsOnline] = useState(false);
+  const [preferences, setPreferences] = useState([
+    { id: 1, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
+    { id: 2, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
+    { id: 3, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
+    { id: 4, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
+    { id: 5, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
+  ]);
+
   const navigate = useNavigate(); // Navigation hook
-
-  // Function to fetch logged-in user data
-  const getUserData = async () => {
-    try {
-      const response = await fetch('/api/user'); // Example API endpoint
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        const data = await response.json();
-        return {
-          username: data.username,
-          email: data.email,
-          preferences: data.preferences,
-        };
-      } else {
-        const text = await response.text();
-        console.error('Response was not JSON:', text);
-        throw new Error('Response was not JSON');
-      }
-    } catch (error) {
-      console.error('Failed to fetch user data:', error);
-      return { username: '', email: '', preferences: [] };
-    }
-  };
-
-  useEffect(() => {
-    // Fetch user data and preferences from an API or context
-    const fetchUserData = async () => {
-      const userData = await getUserData(); // Replace with actual data fetching
-      setUser({ username: userData.username, email: userData.email });
-      setPreferences(userData.preferences);
-    };
-
-    fetchUserData();
-  }, []);
+  const userEmail = localStorage.getItem("userEmail"); // Retrieve email from localStorage
 
   const handlePreferenceChange = (id) => {
     setPreferences((prev) =>
@@ -92,18 +63,6 @@ const Settings = () => {
         <span className="back-arrow">←</span>
       </div>
 
-      {/* User Info Section */}
-      <div className="user-info-section">
-        <div className="user-info-item">
-          <span className="user-info-label">Username:</span>
-          <span className="user-info-value">{user.username}</span>
-        </div>
-        <div className="user-info-item">
-          <span className="user-info-label">Email:</span>
-          <span className="user-info-value">{user.email}</span>
-        </div>
-      </div>
-
       {/* Profile Section */}
       <div className="profile-section">
         <img
@@ -112,9 +71,8 @@ const Settings = () => {
           alt="User"
         />
         <h2 className="profile-name">
-          {user.username} <span className="edit-icon">✏️</span>
+          {userEmail} <span className="edit-icon">✏️</span>
         </h2>
-        <p className="profile-email">{user.email}</p>
         
         <button className="apply-button">Apply</button>
         <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
@@ -135,7 +93,7 @@ const Settings = () => {
                 pref.checked ? "text-checked" : "text-unchecked"
               }`}
             >
-              {pref.name}
+              {pref.text}
             </span>
           </div>
         ))}
