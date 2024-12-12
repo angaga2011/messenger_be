@@ -9,14 +9,26 @@ const Settings = () => {
 
   // Function to fetch logged-in user data
   const getUserData = async () => {
-    // Replace this with actual data fetching logic
-    const response = await fetch('/api/user'); // Example API endpoint
-    const data = await response.json();
-    return {
-      username: data.username,
-      email: data.email,
-      preferences: data.preferences,
-    };
+    try {
+      const response = await fetch('/api/user'); // Example API endpoint
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        const data = await response.json();
+        return {
+          username: data.username,
+          email: data.email,
+          preferences: data.preferences,
+        };
+      } else {
+        throw new Error('Response was not JSON');
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data:', error);
+      return { username: '', email: '', preferences: [] };
+    }
   };
 
   useEffect(() => {
