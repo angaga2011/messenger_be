@@ -83,7 +83,6 @@ const Settings = () => {
         {userDetails.map((detail, index) => (
           <p key={index} className="profile-name">
             {detail.label}: {detail.value} 
-            {/* <span className="edit-icon"></span> */}
           </p>
         ))}
 
