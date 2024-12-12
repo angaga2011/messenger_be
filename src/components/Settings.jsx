@@ -5,9 +5,10 @@ import "../styles/Settings.css";
 const Settings = () => {
   const [userEmail, setUserEmail] = useState('');
   const [username, setUsername] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false); // Add state for dark mode
   const [preferences, setPreferences] = useState([
     { id: 1, text: "Darkmode", checked: false },
-    { id: 2, text: "Recieve Notifications", checked: false },
+    { id: 2, text: "Receive Notifications", checked: false },
     { id: 3, text: "Sound on notifications", checked: true },
   ]);
 
@@ -16,13 +17,15 @@ const Settings = () => {
   useEffect(() => {
     const storedEmail = localStorage.getItem('userEmail');
     const storedUsername = localStorage.getItem('userName');
-    
+    const storedDarkMode = localStorage.getItem('isDarkMode') === 'true';
+
     if (storedEmail) {
       setUserEmail(storedEmail);
     }
     if (storedUsername) {
       setUsername(storedUsername);
     }
+    setIsDarkMode(storedDarkMode); // Load dark mode preference
   }, []);
 
   const handlePreferenceChange = (id) => {
@@ -31,6 +34,11 @@ const Settings = () => {
         pref.id === id ? { ...pref, checked: !pref.checked } : pref
       )
     );
+
+    if (id === 1) {
+      setIsDarkMode(!isDarkMode);
+      localStorage.setItem('isDarkMode', !isDarkMode); // Save dark mode preference
+    }
   };
 
   const handleDeleteAccount = async () => {
@@ -67,7 +75,7 @@ const Settings = () => {
   ];
 
   return (
-    <div className="settings-container">
+    <div className={`settings-container ${isDarkMode ? 'dark-mode' : ''}`}>
       {/* Back Arrow */}
       <div className="back-arrow-container" onClick={() => navigate("/chat")}>
         <span className="back-arrow">←</span>
