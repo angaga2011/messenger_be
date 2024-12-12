@@ -8,3 +8,38 @@
 }
 
 
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #333; /* Dark background */
+    color: #f4f4f4; /* Light text */
+}
+
+.dark-mode .contacts-section {
+    background-color: #444; /* Darker background for sections */
+    color: #f4f4f4; /* Light text */
+}
+
+.dark-mode .chat-section {
+    background-color: #444; /* Darker background for sections */
+    color: #f4f4f4; /* Light text */
+}
+
+.dark-mode .chat-messages {
+    background-color: #555; /* Darker background for messages */
+    color: #f4f4f4; /* Light text */
+}
+
+.dark-mode .chat-input-container {
+    background-color: #555; /* Darker background for input */
+    color: #f4f4f4; /* Light text */
+}
+
+.dark-mode .send-button {
+    background-color: #666; /* Darker button background */
+    color: #f4f4f4; /* Light button text */
+}
+
+.dark-mode .send-button:hover {
+    background-color: #777; /* Even darker on hover */
+}
