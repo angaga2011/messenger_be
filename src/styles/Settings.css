@@ -94,13 +94,7 @@
     margin-left: 5px;
   }
   
-  .online-toggle {
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 16px;
-  }
+
   
   .apply-button {
     margin-top: 20px;
@@ -141,10 +135,17 @@
   
   .text-checked {
     color: green;
+    font-weight: normal;
+    font-size: 16px;
+
   }
   
   .text-unchecked {
     color: red;
+    font-weight: normal;
+    font-size: 16px;
+
+
   }
   
 
