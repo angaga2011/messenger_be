@@ -147,6 +147,7 @@ const ChatScreen = () => {
       if (!participantEmails) return;
 
       const participants = participantEmails.split(",").map(email => email.trim());
+      participants.push(userEmail); // Add the user who created the group
 
       try {
         if (!jwt) {
@@ -237,13 +238,16 @@ const ChatScreen = () => {
     navigate("/settings");
   };
 
-  // Function to delete a contact
+  // Function to delete a contact or group
   const onDeleteContact = async (email) => {
     if (!email) return;
 
     try {
+      const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
+      const endpoint = isGroup ? "deleteGroup" : "deleteContact";
+
       const response = await fetch(
-        "https://my-messenger-backend.onrender.com/api/contacts/deleteContact",
+        `https://my-messenger-backend.onrender.com/api/contacts/${endpoint}`,
         {
           method: "DELETE",
           headers: {
@@ -257,14 +261,14 @@ const ChatScreen = () => {
       if (response.ok) {
         setContacts(contacts.filter(contact => contact.email !== email));
         setSelectedContact(null); // Clear the selected contact
-        alert("Contact deleted successfully!");
+        alert("Contact or group deleted successfully!");
       } else {
         const error = await response.json();
-        alert(`Failed to delete contact: ${error.message}`);
+        alert(`Failed to delete contact or group: ${error.message}`);
       }
     } catch (err) {
-      console.error("Error deleting contact:", err);
-      alert("An error occurred while deleting the contact.");
+      console.error("Error deleting contact or group:", err);
+      alert("An error occurred while deleting the contact or group.");
     }
   };
 
