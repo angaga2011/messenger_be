@@ -81,10 +81,15 @@ const Settings = () => {
           alt="User"
         />
         {userDetails.map((detail, index) => (
-          <h2 key={index} className="profile-detail">
-            {detail.label}: {detail.value} <span className="edit-icon"></span>
-          </h2>
+          <p key={index} className="profile-name">
+            {detail.label}: {detail.value} 
+            {/* <span className="edit-icon"></span> */}
+          </p>
         ))}
+
+        <div>
+
+        </div>
         
         <button className="apply-button">Apply</button>
         <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
