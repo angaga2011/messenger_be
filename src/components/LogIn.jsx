@@ -20,14 +20,10 @@ const LogIn = () => {
                 email: formData.email,
                 password: formData.password,
             });
-            
-            console.log("Server Response:", res.data);
 
-            // Save the token and email in localStorage
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('userEmail', formData.email);
 
-            // Navigate to the chat screen
             navigate('/chat');
         } catch (err) {
             console.error('Error logging in:', err);
