@@ -83,7 +83,12 @@
     color: #000000;
 }
 
-
+.no-messages {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  margin-top: 20px;
+}
 
 /* Dark Mode Styles */
 .dark-mode {
