@@ -108,7 +108,7 @@
 
 .settings-logout-div {
 
-    border-bottom: 1px solid #1c1c1c; /* Red separator line */
+    border-bottom: 0px solid #1c1c1c; /* Red separator line */
 }
 
 .delete-contact-button {
