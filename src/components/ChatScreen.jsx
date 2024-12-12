@@ -122,7 +122,7 @@ const ChatScreen = () => {
     });
 
     newSocket.on('receive_message', (message) => {
-      if (selectedContact === message.sender || (message.isGroup && selectedContact === message.receiver)) {
+      if ((message.isGroup && selectedContact === message.receiver) || (!message.isGroup && selectedContact === message.sender)) {
         setMessages((prevMessages) => [...prevMessages, message]);
       }
     });
@@ -255,7 +255,7 @@ const ChatScreen = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`,
           },
-          body: JSON.stringify({ contactEmail: email }),
+          body: JSON.stringify({ contactEmail: email, groupName: email }),
         }
       );
 
