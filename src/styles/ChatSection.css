@@ -57,7 +57,6 @@
     background-color: #b5b5b5; /* Gray for received messages */
     color: black;
     margin-right: auto; /* Align to the left */
-    font-weight: bold;
 }
 
 .message-sender{
