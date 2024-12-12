@@ -6,7 +6,7 @@ const Settings = () => {
   const [userEmail, setUserEmail] = useState('');
   const [username, setUsername] = useState('');
   const [preferences, setPreferences] = useState([
-    { id: 1, text: "Darkmode", checked: true },
+    { id: 1, text: "Darkmode", checked: false },
     { id: 2, text: "Recieve Notifications", checked: false },
     { id: 3, text: "Sound on notifications", checked: true },
   ]);
