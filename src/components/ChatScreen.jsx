@@ -120,7 +120,7 @@ const ChatScreen = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Function to add a new contact
+  // Function to add a new contact or group of contacts
   const handleAddContact = async () => {
     const newContactEmail = prompt("Enter the email of the new contact:");
     if (!newContactEmail) return;
@@ -132,37 +132,39 @@ const ChatScreen = () => {
       return;
     }
 
-    try {
-      if (!jwt) {
-        alert("You are not logged in. Please log in first.");
-        return;
-      }
-
-      const response = await fetch(
-        "https://my-messenger-backend.onrender.com/api/contacts/addContact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-          body: JSON.stringify({
-            contacts: [newContactEmail],
-          }),
+    if (newContacts.length > 0) {
+      try {
+        if (!jwt) {
+          alert("You are not logged in. Please log in first.");
+          return;
         }
-      );
-  
-      if (response.ok) {
-        const responseData = await response.json();
-        setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null }]);
-        alert("Contact added successfully!");
-      } else {
-        const error = await response.json();
-        alert(`Failed to add contact: ${error.message}`);
+
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/contacts/addContact",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+            body: JSON.stringify({
+              contacts: newContacts,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const responseData = await response.json();
+          setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null }]);
+          alert("Contact(s) added successfully!");
+        } else {
+          const error = await response.json();
+          alert(`Failed to add contact(s): ${error.message}`);
+        }
+      } catch (err) {
+        console.error("Error adding contact(s):", err);
+        alert("An error occurred while adding the contact(s).");
       }
-    } catch (err) {
-      console.error("Error adding contact:", err);
-      alert("An error occurred while adding the contact.");
     }
   };
 
