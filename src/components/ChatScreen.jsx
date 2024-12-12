@@ -200,7 +200,7 @@ const ChatScreen = () => {
         }
 
         const response = await fetch(
-          "https://my-messenger-backend.onrender.com/api/contacts/addContact",
+          "https://my-messenger-backend.onrender.com/api/contacts/add-contact",
           {
             method: "POST",
             headers: {
@@ -245,17 +245,16 @@ const ChatScreen = () => {
 
     try {
       const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
-      const endpoint = isGroup ? "groups/deleteGroup" : "contacts/deleteContact";
+      const endpoint = isGroup ? "groups/delete-group" : "contacts/delete-contact";
 
       const response = await fetch(
-        `https://my-messenger-backend.onrender.com/api/${endpoint}`,
+        `https://my-messenger-backend.onrender.com/api/${endpoint}?contactEmail=${email}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`,
-          },
-          body: JSON.stringify({ contactEmail: email }),
+          }
         }
       );
 
