@@ -7,7 +7,7 @@ const ChatSection = ({ selectedContact, messages, input, setInput, onSendMessage
   <div className="chat-section">
     {selectedContact ? (
       <>
-        <div className="selected-contact-email">{selectedContact}</div>
+        <div className="selected-contact-email">{contact.username}</div>
         <ChatMessages messages={messages} messagesEndRef={messagesEndRef} />
         <ChatInput input={input} setInput={setInput} onSendMessage={onSendMessage} />
       </>
