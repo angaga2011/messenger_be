@@ -120,49 +120,56 @@ const ChatScreen = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Function to add a new contact
+  // Function to add a new contact or group of contacts
   const handleAddContact = async () => {
-    const newContactEmail = prompt("Enter the email of the new contact:");
-    if (!newContactEmail) return;
-  
-    // Check if the contact is already in the list before making the API call
-    const isContactAlreadyAdded = contacts.includes(newContactEmail);
-    if (isContactAlreadyAdded) {
-      alert("Contact already added.");
-      return;
+    const isGroup = window.confirm("Do you want to create a group?");
+    let newContacts = [];
+
+    if (isGroup) {
+      const groupEmails = prompt("Enter the emails of the contacts separated by a comma:");
+      if (groupEmails) {
+        newContacts = groupEmails.split(",").map(email => email.trim());
+      }
+    } else {
+      const newContactEmail = prompt("Enter the email of the new contact:");
+      if (newContactEmail) {
+        newContacts = [newContactEmail.trim()];
+      }
     }
 
-    try {
-      if (!jwt) {
-        alert("You are not logged in. Please log in first.");
-        return;
-      }
-
-      const response = await fetch(
-        "https://my-messenger-backend.onrender.com/api/contacts/addContact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-          body: JSON.stringify({
-            contacts: [newContactEmail],
-          }),
+    if (newContacts.length > 0) {
+      try {
+        if (!jwt) {
+          alert("You are not logged in. Please log in first.");
+          return;
         }
-      );
-  
-      if (response.ok) {
-        const responseData = await response.json();
-        setContacts((prevContacts) => [...prevContacts, newContactEmail]);
-        alert("Contact added successfully!");
-      } else {
-        const error = await response.json();
-        alert(`Failed to add contact: ${error.message}`);
+
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/contacts/addContact",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+            body: JSON.stringify({
+              contacts: newContacts,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const responseData = await response.json();
+          setContacts((prevContacts) => [...new Set([...prevContacts, ...newContacts])]);
+          alert("Contact(s) added successfully!");
+        } else {
+          const error = await response.json();
+          alert(`Failed to add contact(s): ${error.message}`);
+        }
+      } catch (err) {
+        console.error("Error adding contact(s):", err);
+        alert("An error occurred while adding the contact(s).");
       }
-    } catch (err) {
-      console.error("Error adding contact:", err);
-      alert("An error occurred while adding the contact.");
     }
   };
 
@@ -178,8 +185,7 @@ const ChatScreen = () => {
     navigate("/settings");
   };
 
-
- //not fully implemented function 
+  //not fully implemented function 
   const onDeleteContact = (email) => {
     if (email) {
       // Logic to delete the contact
