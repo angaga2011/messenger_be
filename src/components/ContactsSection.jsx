@@ -13,6 +13,7 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
           username={contact.username}
           isSelected={selectedContact === contact.email}
           onSelect={() => onSelectContact(contact.email)}
+          isGroup={contact.isGroup}
         />
       ))}
     </div>

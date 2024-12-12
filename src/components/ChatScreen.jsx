@@ -39,25 +39,38 @@ const ChatScreen = () => {
   // Fetch contacts from the backend
   const fetchContacts = async () => {
     try {
-      const response = await fetch(
-        "https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts",
-        {
+      const [contactsResponse, groupsResponse] = await Promise.all([
+        fetch("https://my-messenger-backend.onrender.com/api/contacts/get-user-contacts", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${jwt}`
           },
-        }
-      );
+        }),
+        fetch("https://my-messenger-backend.onrender.com/api/groups/get-user-groups", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          },
+        })
+      ]);
 
-      if (response.ok) {
-        const data = await response.json();
-        setContacts(data.contacts);
+      if (contactsResponse.ok && groupsResponse.ok) {
+        const contactsData = await contactsResponse.json();
+        const groupsData = await groupsResponse.json();
+
+        const contactsWithGroups = [
+          ...contactsData.contacts.map(contact => ({ ...contact, isGroup: false })),
+          ...groupsData.groups.map(group => ({ email: group.groupName, username: null, isGroup: true }))
+        ];
+
+        setContacts(contactsWithGroups);
       } else {
-        const error = await response.json();
-        console.error("Failed to fetch contacts:", error.message);
+        const contactsError = await contactsResponse.json();
+        const groupsError = await groupsResponse.json();
+        console.error("Failed to fetch contacts or groups:", contactsError.message, groupsError.message);
       }
     } catch (err) {
-      console.error("Error fetching contacts:", err);
+      console.error("Error fetching contacts or groups:", err);
     }
   };
 
@@ -85,7 +98,10 @@ const ChatScreen = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setMessages(data.messages);
+        setMessages(data.messages.map(message => ({
+          ...message,
+          isGroup: message.isGroup !== undefined ? message.isGroup : false
+        })));
       } else {
         const error = await response.json();
         console.error("Failed to fetch messages:", error.message);
@@ -105,7 +121,7 @@ const ChatScreen = () => {
     });
 
     newSocket.on('receive_message', (message) => {
-      if(selectedContact === message.sender){
+      if (selectedContact === message.sender || (message.isGroup && selectedContact === message.receiver)) {
         setMessages((prevMessages) => [...prevMessages, message]);
       }
     });
@@ -122,17 +138,59 @@ const ChatScreen = () => {
 
   // Function to add a new contact or group of contacts
   const handleAddContact = async () => {
-    const newContactEmail = prompt("Enter the email of the new contact:");
-    if (!newContactEmail) return;
-  
-    // Check if the contact is already in the list before making the API call
-    const isContactAlreadyAdded = contacts.some(contact => contact.email === newContactEmail);
-    if (isContactAlreadyAdded) {
-      alert("Contact already added.");
-      return;
-    }
+    const isGroup = window.confirm("Do you want to create a group?");
+    if (isGroup) {
+      const groupName = prompt("Enter the name of the group:");
+      if (!groupName) return;
 
-    if (newContacts.length > 0) {
+      const participantEmails = prompt("Enter the emails of the participants, separated by commas:");
+      if (!participantEmails) return;
+
+      const participants = participantEmails.split(",").map(email => email.trim());
+
+      try {
+        if (!jwt) {
+          alert("You are not logged in. Please log in first.");
+          return;
+        }
+
+        const response = await fetch(
+          "https://my-messenger-backend.onrender.com/api/groups/create-group",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+            body: JSON.stringify({
+              groupName,
+              participants,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          setContacts((prevContacts) => [...prevContacts, { email: groupName, username: null, isGroup: true }]);
+          alert("Group created successfully!");
+        } else {
+          const error = await response.json();
+          alert(`Failed to create group: ${error.message}`);
+        }
+      } catch (err) {
+        console.error("Error creating group:", err);
+        alert("An error occurred while creating the group.");
+      }
+    } else {
+      const newContactEmail = prompt("Enter the email of the new contact:");
+      if (!newContactEmail) return;
+
+      // Check if the contact is already in the list before making the API call
+      const isContactAlreadyAdded = contacts.some(contact => contact.email === newContactEmail);
+      if (isContactAlreadyAdded) {
+        alert("Contact already added.");
+        return;
+      }
+
       try {
         if (!jwt) {
           alert("You are not logged in. Please log in first.");
@@ -148,22 +206,21 @@ const ChatScreen = () => {
               Authorization: `Bearer ${jwt}`,
             },
             body: JSON.stringify({
-              contacts: newContacts,
+              contacts: [newContactEmail],
             }),
           }
         );
 
         if (response.ok) {
-          const responseData = await response.json();
-          setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null }]);
-          alert("Contact(s) added successfully!");
+          setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null, isGroup: false }]); //Be sure to update this in case of errors and bugs
+          alert("Contact added successfully!");
         } else {
           const error = await response.json();
-          alert(`Failed to add contact(s): ${error.message}`);
+          alert(`Failed to add contact: ${error.message}`);
         }
       } catch (err) {
-        console.error("Error adding contact(s):", err);
-        alert("An error occurred while adding the contact(s).");
+        console.error("Error adding contact:", err);
+        alert("An error occurred while adding the contact.");
       }
     }
   };
@@ -225,18 +282,20 @@ const ChatScreen = () => {
       content: input,
       sender: userEmail,
       createdAt: new Date(),
+      isGroup: contacts.find(contact => contact.email === selectedContact)?.isGroup || false,
     };
 
     const messageData = {
       token: jwt,
       receiver: selectedContact,
       content: input,
+      isGroup: newMessage.isGroup,
     };
 
     socket.emit('send_message', messageData);
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setInput("");
-  }, [socket, input, selectedContact, userEmail, jwt]);
+  }, [socket, input, selectedContact, userEmail, jwt, contacts]);
 
   // Memoize the contacts and messages to prevent unnecessary re-renders
   const memoizedContacts = useMemo(() => contacts, [contacts]);
