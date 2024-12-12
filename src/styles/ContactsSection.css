@@ -21,7 +21,8 @@
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     display: inline-block;
-    min-width: 90%;
+    min-width: 87%;
+    max-width: 87%;
     margin-left: 1%;
     margin-right: 1%;
 }
