@@ -1,8 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import ContactItem from "./ContactItem";
 import "../styles/ContactsSection.css";
 
-const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddContact }) => (
+const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddContact, onDeleteContact, handleLogout, handleNavigateToSettings }) => (
   <div className="contacts-section">
     <div className="contact-list">
       {contacts.map((email, index) => (
@@ -14,9 +15,22 @@ const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddCont
         />
       ))}
     </div>
+    <div classname="settings-logout-div">
     <button className="add-contact-button" onClick={onAddContact}>
-      ➕ Add Contact
+      ➕
     </button>
+    <button className="delete-contact-button" onClick={() => onDeleteContact(selectedContact)}>
+      🗑️
+    </button>
+    </div>
+    <div classname="settings-logout-div">
+    <button className="settings-button" onClick={handleNavigateToSettings}>
+      ⚙️
+    </button>
+    <button className="logout-button" onClick={handleLogout}>
+      🔐
+    </button>
+</div>
   </div>
 );
 
