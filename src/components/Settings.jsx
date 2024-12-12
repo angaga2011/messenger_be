@@ -17,7 +17,7 @@ const Settings = () => {
   useEffect(() => {
     const storedEmail = localStorage.getItem('userEmail');
     const storedUsername = localStorage.getItem('userName');
-    const storedDarkMode = localStorage.getItem('isDarkMode') === 'true';
+    const storedDarkMode = localStorage.getItem('isDarkMode') === 'false';
 
     if (storedEmail) {
       setUserEmail(storedEmail);

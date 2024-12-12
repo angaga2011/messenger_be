@@ -60,7 +60,7 @@
 }
 
 .contact-item.selected {
-    background-color: #003f7f; /* Darkest blue for selected contact */
+    background-color: #0056b3; /* Darkest blue for selected contact */
     color: white;
 }
 
