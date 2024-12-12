@@ -7,6 +7,18 @@ const Settings = () => {
   const [preferences, setPreferences] = useState([]);
   const navigate = useNavigate(); // Navigation hook
 
+  // Mock function to simulate fetching user data
+  const getUserData = async () => {
+    return {
+      username: 'JohnDoe',
+      email: 'john.doe@example.com',
+      preferences: [
+        { id: 1, name: 'Receive notifications', checked: true },
+        { id: 2, name: 'Dark mode', checked: false },
+      ],
+    };
+  };
+
   useEffect(() => {
     // Fetch user data and preferences from an API or context
     const fetchUserData = async () => {
