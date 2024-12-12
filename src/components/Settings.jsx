@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation
 import "../styles/Settings.css";
 
 const Settings = () => {
-  const [isOnline, setIsOnline] = useState(false);
-  const [preferences, setPreferences] = useState([
-    { id: 1, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
-    { id: 2, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
-    { id: 3, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
-    { id: 4, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
-    { id: 5, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
-  ]);
-
+  const [user, setUser] = useState({ username: "", email: "" });
+  const [preferences, setPreferences] = useState([]);
   const navigate = useNavigate(); // Navigation hook
+
+  useEffect(() => {
+    // Fetch user data and preferences from an API or context
+    const fetchUserData = async () => {
+      const userData = await getUserData(); // Replace with actual data fetching
+      setUser({ username: userData.username, email: userData.email });
+      setPreferences(userData.preferences);
+    };
+
+    fetchUserData();
+  }, []);
 
   const handlePreferenceChange = (id) => {
     setPreferences((prev) =>
@@ -70,9 +74,9 @@ const Settings = () => {
           alt="User"
         />
         <h2 className="profile-name">
-          {username} <span className="edit-icon">✏️</span>
+          {user.username} <span className="edit-icon">✏️</span>
         </h2>
-        <p className="profile-email">{email}</p>
+        <p className="profile-email">{user.email}</p>
         
         <button className="apply-button">Apply</button>
         <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
@@ -93,6 +97,7 @@ const Settings = () => {
                 pref.checked ? "text-checked" : "text-unchecked"
               }`}
             >
+              {pref.name}
             </span>
           </div>
         ))}
