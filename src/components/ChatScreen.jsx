@@ -126,7 +126,7 @@ const ChatScreen = () => {
     if (!newContactEmail) return;
   
     // Check if the contact is already in the list before making the API call
-    const isContactAlreadyAdded = contacts.includes(newContactEmail);
+    const isContactAlreadyAdded = contacts.some(contact => contact.email === newContactEmail);
     if (isContactAlreadyAdded) {
       alert("Contact already added.");
       return;
@@ -154,7 +154,7 @@ const ChatScreen = () => {
   
       if (response.ok) {
         const responseData = await response.json();
-        setContacts((prevContacts) => [...prevContacts, newContactEmail]);
+        setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null }]);
         alert("Contact added successfully!");
       } else {
         const error = await response.json();
@@ -178,16 +178,37 @@ const ChatScreen = () => {
     navigate("/settings");
   };
 
+  // Function to delete a contact
+  const onDeleteContact = async (email) => {
+    if (!email) return;
 
- //not fully implemented function 
-  const onDeleteContact = (email) => {
-    if (email) {
-      // Logic to delete the contact
-      setContacts(contacts.filter(contact => contact !== email));
-      setSelectedContact(null); // Clear the selected contact
+    try {
+      const response = await fetch(
+        "https://my-messenger-backend.onrender.com/api/contacts/deleteContact",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify({ contactEmail: email }),
+        }
+      );
+
+      if (response.ok) {
+        setContacts(contacts.filter(contact => contact.email !== email));
+        setSelectedContact(null); // Clear the selected contact
+        alert("Contact deleted successfully!");
+      } else {
+        const error = await response.json();
+        alert(`Failed to delete contact: ${error.message}`);
+      }
+    } catch (err) {
+      console.error("Error deleting contact:", err);
+      alert("An error occurred while deleting the contact.");
     }
   };
-  
+
   // Function to handle selecting a contact
   const handleSelectContact = useCallback((contactEmail) => {
     setSelectedContact(contactEmail);
