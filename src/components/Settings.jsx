@@ -23,6 +23,8 @@ const Settings = () => {
           preferences: data.preferences,
         };
       } else {
+        const text = await response.text();
+        console.error('Response was not JSON:', text);
         throw new Error('Response was not JSON');
       }
     } catch (error) {
@@ -88,6 +90,18 @@ const Settings = () => {
       {/* Back Arrow */}
       <div className="back-arrow-container" onClick={() => navigate("/chat")}>
         <span className="back-arrow">←</span>
+      </div>
+
+      {/* User Info Section */}
+      <div className="user-info-section">
+        <div className="user-info-item">
+          <span className="user-info-label">Username:</span>
+          <span className="user-info-value">{user.username}</span>
+        </div>
+        <div className="user-info-item">
+          <span className="user-info-label">Email:</span>
+          <span className="user-info-value">{user.email}</span>
+        </div>
       </div>
 
       {/* Profile Section */}
