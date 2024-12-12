@@ -245,17 +245,17 @@ const ChatScreen = () => {
 
     try {
       const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
-      const endpoint = isGroup ? "groups/delete-group" : "contacts/delete-contact";
-      console.log("Deleting contact or group:", email);
+      const endpoint = isGroup ? "groups/deleteGroup" : "contacts/deleteContact";
 
       const response = await fetch(
-        `https://my-messenger-backend.onrender.com/api/${endpoint}?contactEmail=${email}`,
+        `https://my-messenger-backend.onrender.com/api/${endpoint}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`,
-          }
+          },
+          body: JSON.stringify({ contactEmail: email }),
         }
       );
 
