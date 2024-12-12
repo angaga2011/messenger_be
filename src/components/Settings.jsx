@@ -7,15 +7,15 @@ const Settings = () => {
   const [preferences, setPreferences] = useState([]);
   const navigate = useNavigate(); // Navigation hook
 
-  // Mock function to simulate fetching user data
+  // Function to fetch logged-in user data
   const getUserData = async () => {
+    // Replace this with actual data fetching logic
+    const response = await fetch('/api/user'); // Example API endpoint
+    const data = await response.json();
     return {
-      username: 'JohnDoe',
-      email: 'john.doe@example.com',
-      preferences: [
-        { id: 1, name: 'Receive notifications', checked: true },
-        { id: 2, name: 'Dark mode', checked: false },
-      ],
+      username: data.username,
+      email: data.email,
+      preferences: data.preferences,
     };
   };
 
