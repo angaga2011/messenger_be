@@ -15,8 +15,20 @@
     border-bottom: 1px solid #3c3c3c;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
 }
+
+.contact-username {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.contact-email {
+    font-size: 16px;
+    color:#3c3c3c
+}
+
 
 .contact-item.selected {
     background-color: #ddd;
