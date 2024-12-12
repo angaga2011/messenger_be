@@ -7,6 +7,7 @@ import ChatSection from "./ChatSection";
 
 const ChatScreen = () => {
   const navigate = useNavigate();
+  const userName = localStorage.getItem("userName");
   const userEmail = localStorage.getItem("userEmail");
   const jwt = localStorage.getItem("token");
 
@@ -244,10 +245,10 @@ const ChatScreen = () => {
 
     try {
       const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
-      const endpoint = isGroup ? "deleteGroup" : "deleteContact";
+      const endpoint = isGroup ? "/groups/deleteGroup" : "/contacts/deleteContact";
 
       const response = await fetch(
-        `https://my-messenger-backend.onrender.com/api/contacts/${endpoint}`,
+        `https://my-messenger-backend.onrender.com/api/${endpoint}`,
         {
           method: "DELETE",
           headers: {

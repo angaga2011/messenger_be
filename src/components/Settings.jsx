@@ -17,7 +17,8 @@ const Settings = () => {
 
   useEffect(() => {
     const storedEmail = localStorage.getItem('userEmail');
-    const storedUsername = localStorage.getItem('username');
+    const storedUsername = localStorage.getItem('userName');
+    
     if (storedEmail) {
       setUserEmail(storedEmail);
     }

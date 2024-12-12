@@ -22,6 +22,7 @@ const LogIn = () => {
             });
 
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('userName', res.data.username);
             localStorage.setItem('userEmail', formData.email);
 
             navigate('/chat');
