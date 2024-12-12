@@ -122,7 +122,7 @@ const ChatScreen = () => {
     });
 
     newSocket.on('receive_message', (message) => {
-      if (selectedContact === message.sender || (message.isGroup && selectedContact === message.receiver)) {
+      if ((message.isGroup && selectedContact === message.receiver) || (!message.isGroup && selectedContact === message.sender)) {
         setMessages((prevMessages) => [...prevMessages, message]);
       }
     });
@@ -245,7 +245,7 @@ const ChatScreen = () => {
 
     try {
       const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
-      const endpoint = isGroup ? "groups/deleteGroup" : "contacts/deleteContact";
+      const endpoint = isGroup ? "groups/delete-group" : "contacts/delete-contact";
 
       const response = await fetch(
         `https://my-messenger-backend.onrender.com/api/${endpoint}`,
@@ -255,7 +255,7 @@ const ChatScreen = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`,
           },
-          body: JSON.stringify({ contactEmail: email }),
+          body: JSON.stringify({ contactEmail: email, groupName: email }),
         }
       );
 
@@ -291,7 +291,7 @@ const ChatScreen = () => {
     };
 
     const messageData = {
-      token: jwt,
+      sender: userEmail,
       receiver: selectedContact,
       content: input,
       isGroup: newMessage.isGroup,
