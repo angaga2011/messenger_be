@@ -122,19 +122,14 @@ const ChatScreen = () => {
 
   // Function to add a new contact or group of contacts
   const handleAddContact = async () => {
-    const isGroup = window.confirm("Do you want to create a group?");
-    let newContacts = [];
-
-    if (isGroup) {
-      const groupEmails = prompt("Enter the emails of the contacts separated by a comma:");
-      if (groupEmails) {
-        newContacts = groupEmails.split(",").map(email => email.trim());
-      }
-    } else {
-      const newContactEmail = prompt("Enter the email of the new contact:");
-      if (newContactEmail) {
-        newContacts = [newContactEmail.trim()];
-      }
+    const newContactEmail = prompt("Enter the email of the new contact:");
+    if (!newContactEmail) return;
+  
+    // Check if the contact is already in the list before making the API call
+    const isContactAlreadyAdded = contacts.some(contact => contact.email === newContactEmail);
+    if (isContactAlreadyAdded) {
+      alert("Contact already added.");
+      return;
     }
 
     if (newContacts.length > 0) {
@@ -160,7 +155,7 @@ const ChatScreen = () => {
 
         if (response.ok) {
           const responseData = await response.json();
-          setContacts((prevContacts) => [...new Set([...prevContacts, ...newContacts])]);
+          setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null }]);
           alert("Contact(s) added successfully!");
         } else {
           const error = await response.json();
@@ -185,15 +180,37 @@ const ChatScreen = () => {
     navigate("/settings");
   };
 
-  //not fully implemented function 
-  const onDeleteContact = (email) => {
-    if (email) {
-      // Logic to delete the contact
-      setContacts(contacts.filter(contact => contact !== email));
-      setSelectedContact(null); // Clear the selected contact
+  // Function to delete a contact
+  const onDeleteContact = async (email) => {
+    if (!email) return;
+
+    try {
+      const response = await fetch(
+        "https://my-messenger-backend.onrender.com/api/contacts/deleteContact",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+          body: JSON.stringify({ contactEmail: email }),
+        }
+      );
+
+      if (response.ok) {
+        setContacts(contacts.filter(contact => contact.email !== email));
+        setSelectedContact(null); // Clear the selected contact
+        alert("Contact deleted successfully!");
+      } else {
+        const error = await response.json();
+        alert(`Failed to delete contact: ${error.message}`);
+      }
+    } catch (err) {
+      console.error("Error deleting contact:", err);
+      alert("An error occurred while deleting the contact.");
     }
   };
-  
+
   // Function to handle selecting a contact
   const handleSelectContact = useCallback((contactEmail) => {
     setSelectedContact(contactEmail);
