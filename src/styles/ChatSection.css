@@ -84,10 +84,20 @@
 }
 
 .no-messages {
-  text-align: center;
-  font-size: 18px;
-  color: #888;
-  margin-top: 20px;
+    flex: 1;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    padding: 27%;
+    text-align: center;
+    font-size: 30px;
+    color: #888;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px #0000001a;
+}
+
+.no-messages::-webkit-scrollbar {
+    display: none;
 }
 
 /* Dark Mode Styles */
