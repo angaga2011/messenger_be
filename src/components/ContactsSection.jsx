@@ -6,31 +6,29 @@ import "../styles/ContactsSection.css";
 const ContactsSection = ({ contacts, selectedContact, onSelectContact, onAddContact, onDeleteContact, handleLogout, handleNavigateToSettings }) => (
   <div className="contacts-section">
     <div className="contact-list">
-      {contacts.map((email, index) => (
+      {contacts.map((contact, index) => (
         <ContactItem
           key={index}
-          email={email}
-          isSelected={selectedContact === email}
-          onSelect={() => onSelectContact(email)}
+          email={contact.email}
+          username={contact.username}
+          isSelected={selectedContact === contact.email}
+          onSelect={() => onSelectContact(contact.email)}
         />
       ))}
     </div>
-    <div classname="settings-logout-div">
-    <button className="add-contact-button" onClick={onAddContact}>
-      ➕
-    </button>
-    <button className="delete-contact-button" onClick={() => onDeleteContact(selectedContact)}>
-      🗑️
-    </button>
+    <div className="settings-logout-div">
+      <button className="add-contact-button" onClick={onAddContact}>
+        ➕
+      </button>
+      <button className="delete-contact-button" onClick={() => onDeleteContact(selectedContact)}>
+        🗑️
+      </button>
     </div>
-    <div classname="settings-logout-div">
-    <button className="settings-button" onClick={handleNavigateToSettings}>
-      ⚙️
-    </button>
-    <button className="logout-button" onClick={handleLogout}>
-      🔐
-    </button>
-</div>
+    <div className="settings-logout-div">
+      <button className="settings-button" onClick={handleNavigateToSettings}>
+        ⚙️
+      </button>
+    </div>
   </div>
 );
 

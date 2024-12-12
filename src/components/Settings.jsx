@@ -89,7 +89,7 @@ const Settings = () => {
         />
         {userDetails.map((detail, index) => (
           <h2 key={index} className="profile-detail">
-            {detail.label}: {detail.value} <span className="edit-icon">✏️</span>
+            {detail.label}: {detail.value} <span className="edit-icon"></span>
           </h2>
         ))}
         
