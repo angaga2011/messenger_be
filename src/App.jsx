@@ -39,7 +39,7 @@ const App = () => {
     };
 
     checkAuthentication();
-  }, []);
+  }, [token]);
 
   if (loading) {
     return <div>Loading...</div>;
