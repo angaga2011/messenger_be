@@ -39,32 +39,26 @@ const Settings = () => {
     if (!confirmDelete) return;
 
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/delete-account`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/account/delete-account`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
-      if (response.ok) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("userEmail");
-        localStorage.removeItem("username");
-        navigate("/signup");
-      } else {
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.indexOf("application/json") !== -1) {
-          const error = await response.json();
-          alert(`Failed to delete account: ${error.message}`);
+        if (response.ok) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("username");
+            navigate("/signup");
         } else {
-          const errorText = await response.text();
-          alert(`Failed to delete account: ${errorText}`);
+            const error = await response.json();
+            alert(`Failed to delete account: ${error.message}`);
         }
-      }
     } catch (err) {
-      console.error("Error deleting account:", err);
-      alert("An error occurred while deleting the account.");
+        console.error("Error deleting account:", err);
+        alert("An error occurred while deleting the account.");
     }
   };
 
