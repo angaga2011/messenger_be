@@ -139,7 +139,7 @@ const ChatScreen = () => {
 
   // Function to add a new contact or group of contacts
   const handleAddContact = async () => {
-    const isGroup = window.confirm("Do you want to create a group?");
+    const isGroup = window.confirm("Do you want to create a group? Include your email as well");
     if (isGroup) {
       const groupName = prompt("Enter the name of the group:");
       if (!groupName) return;
