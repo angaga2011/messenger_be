@@ -16,6 +16,7 @@ const ChatScreen = () => {
   const [messages, setMessages] = useState([]); // Messages state
   const [input, setInput] = useState(""); // Chat input state
   const [socket, setSocket] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('isDarkMode') === 'true'); // Dark mode state
 
   // Create a ref for the chat messages container
   const messagesEndRef = useRef(null);
@@ -139,7 +140,7 @@ const ChatScreen = () => {
 
   // Function to add a new contact or group of contacts
   const handleAddContact = async () => {
-    const isGroup = window.confirm("Do you want to create a group? Include your email as well");
+    const isGroup = window.confirm("Do you want to create a group?");
     if (isGroup) {
       const groupName = prompt("Enter the name of the group:");
       if (!groupName) return;
@@ -307,7 +308,7 @@ const ChatScreen = () => {
   const memoizedMessages = useMemo(() => messages, [messages]);
   
   return (
-    <div className="chat-screen">
+    <div className={`chat-screen ${isDarkMode ? 'dark-mode' : ''}`}>
       <ContactsSection
         contacts={memoizedContacts}
         selectedContact={selectedContact}
