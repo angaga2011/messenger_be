@@ -291,7 +291,7 @@ const ChatScreen = () => {
     };
 
     const messageData = {
-      token: jwt,
+      sender: userEmail,
       receiver: selectedContact,
       content: input,
       isGroup: newMessage.isGroup,
