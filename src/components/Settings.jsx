@@ -6,11 +6,9 @@ const Settings = () => {
   const [userEmail, setUserEmail] = useState('');
   const [username, setUsername] = useState('');
   const [preferences, setPreferences] = useState([
-    { id: 1, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
-    { id: 2, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
-    { id: 3, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
-    { id: 4, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
-    { id: 5, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
+    { id: 1, text: "Darkmode", checked: false },
+    { id: 2, text: "Recieve Notifications", checked: false },
+    { id: 3, text: "Sound on notifications", checked: true },
   ]);
 
   const navigate = useNavigate();
