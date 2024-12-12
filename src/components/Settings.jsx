@@ -93,7 +93,6 @@ const Settings = () => {
                 pref.checked ? "text-checked" : "text-unchecked"
               }`}
             >
-              {pref.name}
             </span>
           </div>
         ))}
