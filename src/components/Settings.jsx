@@ -17,7 +17,7 @@ const Settings = () => {
   useEffect(() => {
     const storedEmail = localStorage.getItem('userEmail');
     const storedUsername = localStorage.getItem('userName');
-    const storedDarkMode = localStorage.getItem('isDarkMode') === 'false';
+    const storedDarkMode = localStorage.getItem('isDarkMode') === 'true';
 
     if (storedEmail) {
       setUserEmail(storedEmail);
@@ -26,6 +26,11 @@ const Settings = () => {
       setUsername(storedUsername);
     }
     setIsDarkMode(storedDarkMode); // Load dark mode preference
+    setPreferences((prev) =>
+      prev.map((pref) =>
+        pref.id === 1 ? { ...pref, checked: storedDarkMode } : pref
+      )
+    );
   }, []);
 
   const handlePreferenceChange = (id) => {
