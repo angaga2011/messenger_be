@@ -21,6 +21,17 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+.contact-username {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.contact-email {
+    font-size: 16px;
+    color:#3c3c3c
+}
+
+
 /* Contact List */
 .contact-list {
     flex: 1;
