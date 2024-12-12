@@ -10,8 +10,9 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem('token');
+
   const authenticate = async () => {
-    const token = localStorage.getItem('token');
     if (!token) return false;
 
     try {
