@@ -34,6 +34,7 @@ const App = () => {
     const checkAuthentication = async () => {
       const valid = await authenticate();
       setIsAuthenticated(valid);
+      console.log("isAuthenticated: ", isAuthenticated);
       setLoading(false);
     };
 
