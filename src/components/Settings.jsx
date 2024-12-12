@@ -70,9 +70,9 @@ const Settings = () => {
           alt="User"
         />
         <h2 className="profile-name">
-          {user.username} <span className="edit-icon">✏️</span>
+          {username} <span className="edit-icon">✏️</span>
         </h2>
-        <p className="profile-email">{user.email}</p>
+        <p className="profile-email">{email}</p>
         
         <button className="apply-button">Apply</button>
         <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
