@@ -1,7 +1,8 @@
 import React from "react";
 
-const ContactItem = ({ email, isSelected, onSelect }) => (
+const ContactItem = ({ email, username, isSelected, onSelect }) => (
   <div className={`contact-item ${isSelected ? "selected" : ""}`} onClick={onSelect}>
+    <div className="contact-username">{username}</div>
     <div className="contact-email">{email}</div>
   </div>
 );
