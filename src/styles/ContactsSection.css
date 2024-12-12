@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+
 }
 
 .contact-item {
@@ -23,14 +24,21 @@
 /* Contact List */
 .contact-list {
     flex: 1;
+    overflow-x: hidden;
     overflow-y: auto;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+}
+
+.contact-list::-webkit-scrollbar {
+    display: none;
 }
 
 .contact-item:hover {
     background-color: #0056b3; /* Darker blue on hover */
     color: white;
     transform: scale(1.02); /* Slight zoom effect */
+    border-radius: 30px;
+
 }
 
 .contact-item.selected {
@@ -41,16 +49,84 @@
 /* Add Contact Button */
 .add-contact-button {
     padding: 15px;
+    width: 49%;
+
     margin-top: 20px;
+    margin-right: 5px;
     border: none;
-    background-color: #ff6347; /* Vibrant red-orange for button */
+    background-color: #000000; /* Vibrant red-orange for button */
     color: white;
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: inline-block;
+
 }
 
 .add-contact-button:hover {
-    background-color: #d9534f; /* Slightly darker red-orange */
+    background-color: #48ff00; /* Slightly darker red-orange */
 }
+
+.settings-button {
+    width: 49%;
+    padding: 15px;
+    margin-top: 20px;
+    margin-right: 5px;
+    border: none;
+    background-color: #000000; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    display: inline-block;
+}
+
+.settings-button:hover {
+    background-color: #3c3c3c; /* Slightly darker red-orange */
+}
+
+.logout-button {
+    width: 49%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    background-color: #000000; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    display: inline-block;
+}
+
+.logout-button:hover {
+    background-color: #d9ff00; /* Slightly darker red-orange */
+}
+
+.settings-logout-div {
+
+    border-bottom: 1px solid #1c1c1c; /* Red separator line */
+}
+
+.delete-contact-button {
+    padding: 15px;
+    width: 49%;
+    margin-top: 20px;
+    border: none;
+    background-color: #000000; /* Vibrant red-orange for button */
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+
+  }
+  
+  .delete-contact-button:hover {
+    background-color: #ff0000; /* Adjust the hover color as needed */
+  }
