@@ -48,7 +48,7 @@
 }
 
 .chat-message.sent {
-    background-color: #007bff; /* Blue for sent messages */
+    background-color: #0b67c7; /* Blue for sent messages */
     color: white;
     margin-left: auto; /* Align to the right */
 }
