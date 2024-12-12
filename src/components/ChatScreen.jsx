@@ -245,7 +245,7 @@ const ChatScreen = () => {
 
     try {
       const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
-      const endpoint = isGroup ? "groups/deleteGroup" : "contacts/deleteContact";
+      const endpoint = isGroup ? "groups/delete-group" : "contacts/delete-contact";
 
       const response = await fetch(
         `https://my-messenger-backend.onrender.com/api/${endpoint}`,
