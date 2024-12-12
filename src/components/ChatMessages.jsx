@@ -14,7 +14,10 @@ const ChatMessages = ({ messages, messagesEndRef }) => {
           key={message.id}
           className={`chat-message ${message.sender === userEmail ? "sent" : "received"}`}
         >
-          <p>{message.content}</p>
+          {message.sender !== userEmail && (
+            <p className="message-sender">{message.senderUsername}</p>
+          )}
+          <p className="message-content">{message.content}</p>
           <p className="message-timestamp">
             {new Date(message.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
           </p>
