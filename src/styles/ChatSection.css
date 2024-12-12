@@ -5,7 +5,9 @@
     flex-direction: column;
     background-color: #ffffff; /* White background for chat */
     padding: 20px;
-    max-width: 70%;
+    max-width: 80%;
+    border-radius: 8px;
+    border-color: #007bff;
 }
 
 /* Chat Header */
