@@ -246,6 +246,7 @@ const ChatScreen = () => {
     try {
       const isGroup = contacts.find(contact => contact.email === email)?.isGroup || false;
       const endpoint = isGroup ? "groups/delete-group" : "contacts/delete-contact";
+      console.log("Deleting contact or group:", email);
 
       const response = await fetch(
         `https://my-messenger-backend.onrender.com/api/${endpoint}?contactEmail=${email}`,
