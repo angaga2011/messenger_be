@@ -10,14 +10,14 @@ const ChatScreen = () => {
   const userEmail = localStorage.getItem("userEmail");
   const jwt = localStorage.getItem("token");
 
-//   const [contacts, setContacts] = useState([]); // Contacts state
-//   const [selectedContact, setSelectedContact] = useState(null); // Selected contact
-//   const [messages, setMessages] = useState([]); // Messages state
-//   const [input, setInput] = useState(""); // Chat input state
-//   const [socket, setSocket] = useState(null);
+  const [contacts, setContacts] = useState([]); // Contacts state
+  const [selectedContact, setSelectedContact] = useState(null); // Selected contact
+  const [messages, setMessages] = useState([]); // Messages state
+  const [input, setInput] = useState(""); // Chat input state
+  const [socket, setSocket] = useState(null);
 
-//   // Create a ref for the chat messages container
-//   const messagesEndRef = useRef(null);
+  // Create a ref for the chat messages container
+  const messagesEndRef = useRef(null);
 
   // Function to scroll to the bottom of the chat
   const scrollToBottom = () => {
@@ -69,19 +69,19 @@ const ChatScreen = () => {
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [jwt]);
 
-//   // Fetch messages from the backend
-//   const fetchMessages = useCallback(async (contactEmail) => {
-//     setMessages([]); // Clear messages before fetching new ones
-//     try {
-//       const response = await fetch(
-//         `https://my-messenger-backend.onrender.com/api/messages/get-user-messages?contactEmail=${contactEmail}`,
-//         {
-//           method: "GET",
-//           headers: {
-//             Authorization: `Bearer ${jwt}`
-//           },
-//         }
-//       );
+  // Fetch messages from the backend
+  const fetchMessages = useCallback(async (contactEmail) => {
+    setMessages([]); // Clear messages before fetching new ones
+    try {
+      const response = await fetch(
+        `https://my-messenger-backend.onrender.com/api/messages/get-user-messages?contactEmail=${contactEmail}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -95,42 +95,42 @@ const ChatScreen = () => {
     }
   }, [jwt]);
 
-//   // Connect to the socket server
-//   useEffect(() => {
-//     const newSocket = io('https://my-messenger-backend.onrender.com');
-//     setSocket(newSocket);
+  // Connect to the socket server
+  useEffect(() => {
+    const newSocket = io('https://my-messenger-backend.onrender.com');
+    setSocket(newSocket);
 
-//     newSocket.on('connect', () => {
-//       newSocket.emit('register_email', { email: userEmail });
-//     });
+    newSocket.on('connect', () => {
+      newSocket.emit('register_email', { email: userEmail });
+    });
 
-//     newSocket.on('receive_message', (message) => {
-//       if(selectedContact === message.sender){
-//         setMessages((prevMessages) => [...prevMessages, message]);
-//       }
-//     });
+    newSocket.on('receive_message', (message) => {
+      if(selectedContact === message.sender){
+        setMessages((prevMessages) => [...prevMessages, message]);
+      }
+    });
 
-//     return () => {
-//       newSocket.disconnect();
-//     };
-//   }, [userEmail, selectedContact]);
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [userEmail, selectedContact]);
 
-//   // Scroll to the bottom of the chat when messages change
-//   useEffect(() => {
-//     scrollToBottom();
-//   }, [messages]);
+  // Scroll to the bottom of the chat when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-//   // Function to add a new contact
-//   const handleAddContact = async () => {
-//     const newContactEmail = prompt("Enter the email of the new contact:");
-//     if (!newContactEmail) return;
+  // Function to add a new contact
+  const handleAddContact = async () => {
+    const newContactEmail = prompt("Enter the email of the new contact:");
+    if (!newContactEmail) return;
   
-//     // Check if the contact is already in the list before making the API call
-//     const isContactAlreadyAdded = contacts.includes(newContactEmail);
-//     if (isContactAlreadyAdded) {
-//       alert("Contact already added.");
-//       return;
-//     }
+    // Check if the contact is already in the list before making the API call
+    const isContactAlreadyAdded = contacts.includes(newContactEmail);
+    if (isContactAlreadyAdded) {
+      alert("Contact already added.");
+      return;
+    }
 
     try {
       if (!jwt) {
@@ -194,9 +194,9 @@ const ChatScreen = () => {
     fetchMessages(contactEmail);
   }, [fetchMessages]);
 
-//   // Function to handle sending a message
-//   const handleSendMessage = useCallback(() => {
-//     if (!socket || input.trim() === "" || !selectedContact) return;
+  // Function to handle sending a message
+  const handleSendMessage = useCallback(() => {
+    if (!socket || input.trim() === "" || !selectedContact) return;
 
     const newMessage = {
       content: input,
