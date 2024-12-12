@@ -19,7 +19,21 @@
     align-items: center;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+
 }
+
+.contact-username {
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+
+}
+
+.contact-email {
+    font-size: 12px;
+    color:#000000
+}
+
 
 /* Contact List */
 .contact-list {
@@ -108,7 +122,7 @@
 
 .settings-logout-div {
 
-    border-bottom: 1px solid #1c1c1c; /* Red separator line */
+    border-bottom: 0px solid #1c1c1c; /* Red separator line */
 }
 
 .delete-contact-button {

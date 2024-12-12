@@ -1,33 +1,4 @@
 .contact-list {
     flex: 1;
     padding: 10px;
-    /* overflow-y: auto;
-    overflow-x: hidden; */
-}
-/* 
-.contact-list::-webkit-scrollbar {
-    display: none;
-} */
-
-
-.contact-item {
-    padding: 15px;
-    border-bottom: 1px solid #3c3c3c;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-}
-
-.contact-item.selected {
-    background-color: #ddd;
-    border-radius: 8px;
-
-}
-
-.status.online {
-    color: green;
-}
-
-.status.offline {
-    color: red;
 }
