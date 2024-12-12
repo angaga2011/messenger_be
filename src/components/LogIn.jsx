@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import "../styles/LogIn.css";
 
 const LogIn = () => {
@@ -24,15 +24,14 @@ const LogIn = () => {
             console.log("Server Response:", res.data);
 
             // Save the token and email in localStorage
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("userEmail", formData.email);
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('userEmail', formData.email);
 
             // Navigate to the chat screen
-            navigate("/chat");
-            
+            navigate('/chat');
         } catch (err) {
-            // Display error message from server or fallback to "Login failed"
-            setError(err.response?.data?.message || "Login failed");
+            console.error('Error logging in:', err);
+            setError('Invalid email or password');
         }
     };
 
@@ -58,7 +57,7 @@ const LogIn = () => {
                     className="login-input"
                 />
                 <button type="submit" className="login-button">Log In</button>
-                <a href="/signup" className="login-link">Don't have an account? Sign Up</a>
+                <Link to="/signup" className="login-link">Don't have an account? Sign Up</Link>
             </form>
         </div>
     );
