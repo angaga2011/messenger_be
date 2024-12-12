@@ -70,16 +70,10 @@ const Settings = () => {
           alt="User"
         />
         <h2 className="profile-name">
-          Joe Biden <span className="edit-icon">✏️</span>
+          {user.username} <span className="edit-icon">✏️</span>
         </h2>
-        <label className="online-toggle">
-          <input
-            type="checkbox"
-            checked={isOnline}
-            onChange={() => setIsOnline(!isOnline)}
-          />
-          Online
-        </label>
+        <p className="profile-email">{user.email}</p>
+        
         <button className="apply-button">Apply</button>
         <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
       </div>
@@ -99,7 +93,7 @@ const Settings = () => {
                 pref.checked ? "text-checked" : "text-unchecked"
               }`}
             >
-              {pref.text}
+              {pref.name}
             </span>
           </div>
         ))}
