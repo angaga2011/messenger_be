@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Settings.css";
 
 const Settings = () => {
-  const [isOnline, setIsOnline] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [preferences, setPreferences] = useState([
     { id: 1, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: true },
     { id: 2, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
@@ -12,8 +13,18 @@ const Settings = () => {
     { id: 5, text: "Lorem ipsum odor amet, consectetur adipiscing elit.", checked: false },
   ]);
 
-  const navigate = useNavigate(); // Navigation hook
-  const userEmail = localStorage.getItem("userEmail"); // Retrieve email from localStorage
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('userEmail');
+    const storedUsername = localStorage.getItem('username');
+    if (storedEmail) {
+      setUserEmail(storedEmail);
+    }
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const handlePreferenceChange = (id) => {
     setPreferences((prev) =>
@@ -39,6 +50,7 @@ const Settings = () => {
       if (response.ok) {
         localStorage.removeItem("token");
         localStorage.removeItem("userEmail");
+        localStorage.removeItem("username");
         navigate("/signup");
       } else {
         const contentType = response.headers.get("content-type");
@@ -56,6 +68,11 @@ const Settings = () => {
     }
   };
 
+  const userDetails = [
+    { label: "Email", value: userEmail },
+    { label: "Username", value: username },
+  ];
+
   return (
     <div className="settings-container">
       {/* Back Arrow */}
@@ -70,9 +87,11 @@ const Settings = () => {
           src="https://via.placeholder.com/150"
           alt="User"
         />
-        <h2 className="profile-name">
-          {userEmail} <span className="edit-icon">✏️</span>
-        </h2>
+        {userDetails.map((detail, index) => (
+          <h2 key={index} className="profile-detail">
+            {detail.label}: {detail.value} <span className="edit-icon">✏️</span>
+          </h2>
+        ))}
         
         <button className="apply-button">Apply</button>
         <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
