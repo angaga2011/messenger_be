@@ -26,7 +26,6 @@
     flex: 1;
     overflow-x: hidden;
     overflow-y: auto;
-    /* margin-top: 20px; */
 }
 
 .contact-list::-webkit-scrollbar {
@@ -37,7 +36,7 @@
     background-color: #0056b3; /* Darker blue on hover */
     color: white;
     transform: scale(1.02); /* Slight zoom effect */
-    border-radius: 30px;
+    border-radius: 8px;
 
 }
 

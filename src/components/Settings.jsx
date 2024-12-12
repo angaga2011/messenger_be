@@ -22,6 +22,33 @@ const Settings = () => {
     );
   };
 
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/delete-account`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userEmail");
+        navigate("/signup");
+      } else {
+        const error = await response.json();
+        alert(`Failed to delete account: ${error.message}`);
+      }
+    } catch (err) {
+      console.error("Error deleting account:", err);
+      alert("An error occurred while deleting the account.");
+    }
+  };
+
   return (
     <div className="settings-container">
       {/* Back Arrow */}
@@ -48,6 +75,7 @@ const Settings = () => {
           Online
         </label>
         <button className="apply-button">Apply</button>
+        <button className="delete-account-button" onClick={handleDeleteAccount}>Delete Account</button>
       </div>
 
       {/* General Section */}
