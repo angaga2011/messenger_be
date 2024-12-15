@@ -26,6 +26,7 @@ const LogIn = () => {
             localStorage.setItem('userEmail', formData.email);
 
             navigate('/chat');
+            window.location.reload(); //Temporary fix
         } catch (err) {
             console.error('Error logging in:', err);
             setError('Invalid email or password');
