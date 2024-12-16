@@ -10,7 +10,7 @@ This project is a web-based messenger application that allows users to **sign up
    - [Backend Setup](#backend-setup)
    - [Frontend Setup](#frontend-setup)
 5. [Running the Application](#running-the-application)
-6. [Instructions for Deploying on Render.com](#onrender-setup)
+6. [Instructions for Deploying on Render.com](#instructions-for-deploying-on-render.com)
 7. [Usage](#usage)
 8. [Contributing](#contributing)
 9. [License](#license)
