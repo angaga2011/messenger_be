@@ -4,25 +4,28 @@ import axios from "axios";
 import "../styles/SignUp.css";
 
 const SignUp = () => {
+    // State to manage form data and error messages
     const [formData, setFormData] = useState({ username: "", email: "", password: "" });
     const [error, setError] = useState("");
     const navigate = useNavigate(); // To navigate after signup
 
+    // Handle input changes and update form data state
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Make the POST request to the backend
+            // Make the POST request to the backend to register the user
             await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password,
             });
 
-            // Navigate to login page on success
+            // Navigate to login page on successful registration
             navigate("/login");
         } catch (err) {
             // Set error message if registration fails

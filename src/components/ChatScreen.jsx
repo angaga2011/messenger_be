@@ -38,7 +38,7 @@ const ChatScreen = () => {
     }
   }, [jwt, navigate]);
 
-  // Fetch contacts from the backend
+  // Fetch contacts and groups from the backend
   const fetchContacts = async () => {
     try {
       const [contactsResponse, groupsResponse] = await Promise.all([
@@ -61,8 +61,8 @@ const ChatScreen = () => {
         const groupsData = await groupsResponse.json();
 
         const contactsWithGroups = [
-          ...contactsData.contacts.map(contact => ({ ...contact, isGroup: false })),
-          ...groupsData.groups.map(group => ({ email: group.groupName, username: null, isGroup: true }))
+          ...contactsData.contacts.map(contact => ({ ...contact, isGroup: false })), // Common contact data from db
+          ...groupsData.groups.map(group => ({ email: group.groupName, username: null, isGroup: true })) // No username and isGroup set true to differentiate groups
         ];
 
         setContacts(contactsWithGroups);
@@ -86,7 +86,7 @@ const ChatScreen = () => {
 
   // Fetch messages from the backend
   const fetchMessages = useCallback(async (contactEmail) => {
-    setMessages([]); // Clear messages before fetching new ones
+    setMessages([]); // Clear messages on screen before fetching new ones
     try {
       const response = await fetch(
         `https://my-messenger-backend.onrender.com/api/messages/get-user-messages?contactEmail=${contactEmail}`,
@@ -102,7 +102,7 @@ const ChatScreen = () => {
         const data = await response.json();
         setMessages(data.messages.map(message => ({
           ...message,
-          isGroup: message.isGroup !== undefined ? message.isGroup : false
+          isGroup: message.isGroup !== undefined ? message.isGroup : false // If old message object, set isGroup to false
         })));
       } else {
         const error = await response.json();
@@ -215,7 +215,7 @@ const ChatScreen = () => {
         );
 
         if (response.ok) {
-          setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null, isGroup: false }]); //Be sure to update this in case of errors and bugs
+          setContacts((prevContacts) => [...prevContacts, { email: newContactEmail, username: null, isGroup: false }]); // Immediately add the contact to the list
           alert("Contact added successfully!");
         } else {
           const error = await response.json();
@@ -232,6 +232,7 @@ const ChatScreen = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
     navigate("/login");
   };
 
