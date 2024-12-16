@@ -29,7 +29,7 @@ This project is a web-based messenger application that allows users to **sign up
 - User profile management
 - Adding or deleting participants in an existing group
 
-### Planned Features (Stretch Goals) 🚧
+### Planned Features (Stretch Goals) 🛠💧
 - Media sharing (videos, audio) in chats
 - Profile customization (profile picture and status message)
 - Search functionality for messages and conversations
@@ -58,6 +58,7 @@ This project is a web-based messenger application that allows users to **sign up
 
 ## Project Structure
 
+```
 messenger_frontend
 ├── public/...                  # Public assets (HTML, images, etc.)
 ├── src/
@@ -80,7 +81,6 @@ messenger_frontend
 ├── .gitignore                  # Ignored files for git
 ├── package.json                # Project dependencies
 ├── README.md                   # Project documentation
-└── ...
 
 my_messenger_backend/           # Backend root directory
 │   ├── config/
@@ -98,7 +98,7 @@ my_messenger_backend/           # Backend root directory
 ├── .gitignore                  # Ignored files for git
 ├── package.json                # Project dependencies
 ├── README.md                   # Project documentation
-└── ...
+```
 
 ---
 
@@ -107,78 +107,105 @@ my_messenger_backend/           # Backend root directory
 ### Backend Setup
 
 Clone the repository:
+```sh
 git clone <repository-url>
+```
 
 Navigate to the backend directory:
+```sh
 cd my_messenger_backend
+```
 
 Install the dependencies:
+```sh
 npm install
+```
 
-Create a .env file in the backend root directory:
+Create a `.env` file in the backend root directory:
+```env
 MONGO_URI=<your-mongodb-uri>
 JWT_SECRET=<your-jwt-secret>
 PORT=5000
+```
 
 Start the backend server:
-npm run dev (I had issues with firewall while running it from local machine)
+```sh
+npm run dev
+```
+
+---
 
 ### Frontend Setup
 
 Clone the repository:
+```sh
 git clone <repository-url>
+```
 
 Navigate to the frontend directory:
+```sh
 cd messenger_frontend
+```
 
 Install the dependencies:
+```sh
 npm install
+```
 
-Create a .env file in the frontend root directory:
-VITE_API_URL=http://localhost:5000 (Might be issues with firewall)
+Create a `.env` file in the frontend root directory:
+```env
+VITE_API_URL=http://localhost:5000
+```
 
 Start the frontend development server:
+```sh
 npm run dev
+```
 
 ---
 
 ## Running the Application
 
-Ensure that both the backend and frontend servers are running.
-Open your browser and navigate to:
-http://localhost:3000
+1. Ensure that both the **backend** and **frontend** servers are running.
+2. Open your browser and navigate to:
+   ```sh
+   http://localhost:3000
+   ```
 
 ---
 
 ## Usage
 
-Sign Up: Register by providing a username, email, and password.
-Log In: Access the app using your credentials.
-Add Contact/Group: Click add button and follow instructions in the prompt.
-Chat: Select a contact or group and send/receive real-time messages.
+- **Sign Up**: Register by providing a username, email, and password.
+- **Log In**: Access the app using your credentials.
+- **Add Contact/Group**: Click add button and follow instructions in the prompt.
+- **Chat**: Select a contact or group and send/receive real-time messages.
 
-Settings:
-Enter settings using a button on control pannel.
-Toggle dark mode.
-Manage your profile(in development).
+### Settings
+- Enter settings using a button on the control panel.
+- Toggle dark mode.
+- Manage your profile (in development).
 
-Contacts:
-Add or delete individual contacts and groups using a button on control pannel(deletes selected contact).
+### Contacts
+- Add or delete individual contacts and groups using a button on the control panel (deletes selected contact).
 
-Other:
-Make a logout using a button on control pannel.
+### Other
+- Log out using the button on the control panel.
 
-P.S.: You can open second window in incognito mode to login into second accout to test messaging feature.
+*Note: You can open a second window in incognito mode to log into a second account for testing the messaging feature.*
 
 ---
 
 ## Screenshots
 
-![Chat Interface](src\assets\Screenshots\Chat.png)
+**Chat Interface**  
+![Chat Interface](src/assets/Screenshots/Chat.png)
 
-![Login Page](src\assets\Screenshots\Login.png)
+**Login Page**  
+![Login Page](src/assets/Screenshots/Login.png)
 
-![Settings Page](src\assets\Screenshots\Settings.png)
+**Settings Page**  
+![Settings Page](src/assets/Screenshots/Settings.png)
 
 ---
 
@@ -186,16 +213,19 @@ P.S.: You can open second window in incognito mode to login into second accout t
 
 Contributions are welcome!
 
-Fork the repository.
-Create a feature branch:
-git checkout -b feature/your-feature-name
-Commit your changes:
-git commit -m "Add your feature description"
-Push the branch and create a pull request.
+1. Fork the repository.
+2. Create a feature branch:
+   ```sh
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```sh
+   git commit -m "Add your feature description"
+   ```
+4. Push the branch and create a pull request.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License.
-
+This project is licensed under the **MIT License**.
